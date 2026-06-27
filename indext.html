@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CanadaReady — Citizenship Exam Prep</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --red: #C8102E;
+    --red-dark: #9A0B22;
+    --red-light: #F2D7DC;
+    --maple: #FF6B35;
+    --cream: #FAF8F5;
+    --ink: #1A1A2E;
+    --ink-mid: #4A4A6A;
+    --ink-light: #8585A4;
+    --white: #FFFFFF;
+    --border: #E8E4F0;
+    --success: #2E7D4F;
+    --success-light: #D4EDDA;
+    --error: #C8102E;
+    --error-light: #F2D7DC;
+    --gold: #D4A017;
+    --blue-flag: #0052A5;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--white);
+    border-bottom: 2px solid var(--red);
+    position: sticky; top: 0; z-index: 100;
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 0;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 1rem 0;
+    text-decoration: none;
+    margin-right: auto;
+  }
+  .maple-icon { font-size: 1.5rem; }
+  .nav-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--red); }
+  .nav-title span { color: var(--ink); }
+  .nav-tabs { display: flex; gap: 0; }
+  .nav-tab {
+    padding: 1.1rem 1.25rem;
+    cursor: pointer; border: none; background: none;
+    font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 500;
+    color: var(--ink-mid); letter-spacing: 0.04em; text-transform: uppercase;
+    border-bottom: 3px solid transparent; margin-bottom: -2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .nav-tab:hover { color: var(--red); }
+  .nav-tab.active { color: var(--red); border-bottom-color: var(--red); }
+
+  /* ── SCREENS ── */
+  .screen { display: none; animation: fadeIn 0.3s ease; }
+  .screen.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── HOME ── */
+  .hero {
+    background: linear-gradient(135deg, var(--ink) 0%, #2D1B3D 60%, #1A1A2E 100%);
+    color: var(--white);
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '🍁';
+    position: absolute; font-size: 20rem; opacity: 0.04;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--maple); margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900; line-height: 1.05;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 em { color: var(--red); font-style: normal; }
+  .hero p {
+    font-size: 1.1rem; color: rgba(255,255,255,0.72); max-width: 520px; margin: 0 auto 2.5rem;
+    line-height: 1.65;
+  }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 3rem; margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--white); }
+  .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; }
+  .hero-cta {
+    display: inline-block; background: var(--red); color: var(--white);
+    padding: 0.9rem 2.5rem; border-radius: 2px; font-weight: 600; font-size: 0.95rem;
+    cursor: pointer; border: none; letter-spacing: 0.03em;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .hero-cta:hover { background: var(--red-dark); transform: translateY(-1px); }
+
+  .sections-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem; padding: 3rem 2rem; max-width: 1100px; margin: 0 auto;
+  }
+  .section-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 4px; padding: 1.75rem;
+    cursor: pointer; transition: box-shadow 0.2s, transform 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .section-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--red);
+  }
+  .section-card:hover { box-shadow: 0 8px 32px rgba(200,16,46,0.12); transform: translateY(-2px); }
+  .section-card .card-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    color: var(--ink-light); margin-bottom: 0.75rem; letter-spacing: 0.1em;
+  }
+  .section-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 0.5rem; }
+  .section-card p { font-size: 0.85rem; color: var(--ink-mid); line-height: 1.6; }
+  .section-card .card-meta {
+    margin-top: 1rem; display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.75rem; color: var(--ink-light);
+  }
+  .progress-bar-wrap { height: 3px; background: var(--border); border-radius: 2px; margin-top: 1rem; }
+  .progress-bar { height: 100%; background: var(--red); border-radius: 2px; transition: width 0.4s; }
+
+  /* ── LESSONS ── */
+  .lessons-layout {
+    display: grid; grid-template-columns: 260px 1fr;
+    min-height: calc(100vh - 60px);
+  }
+  .lessons-sidebar {
+    background: var(--white); border-right: 1px solid var(--border);
+    padding: 1.5rem 0; overflow-y: auto; position: sticky; top: 60px;
+    height: calc(100vh - 60px);
+  }
+  .sidebar-head { padding: 0 1.25rem 1rem; font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); }
+  .lesson-item {
+    padding: 0.75rem 1.25rem; cursor: pointer;
+    display: flex; align-items: center; gap: 0.75rem;
+    transition: background 0.15s; border-left: 3px solid transparent;
+    font-size: 0.88rem;
+  }
+  .lesson-item:hover { background: var(--cream); }
+  .lesson-item.active { background: var(--red-light); border-left-color: var(--red); color: var(--red-dark); font-weight: 600; }
+  .lesson-item .check { width: 18px; height: 18px; border-radius: 50%;
+    border: 2px solid var(--border); flex-shrink: 0; display: flex; align-items: center;
+    justify-content: center; font-size: 0.65rem; }
+  .lesson-item.done .check { background: var(--success); border-color: var(--success); color: white; }
+
+  .lesson-content {
+    padding: 2.5rem 3rem; max-width: 780px;
+  }
+  .lesson-eyebrow { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--red); margin-bottom: 0.5rem; }
+  .lesson-content h2 { font-family: 'Playfair Display', serif; font-size: 2rem;
+    margin-bottom: 1.5rem; }
+  .lesson-body { font-size: 0.95rem; line-height: 1.8; color: var(--ink); }
+  .lesson-body h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem;
+    margin: 2rem 0 0.75rem; color: var(--red-dark); }
+  .lesson-body p { margin-bottom: 1rem; }
+  .lesson-body ul { margin: 0.5rem 0 1rem 1.5rem; }
+  .lesson-body li { margin-bottom: 0.4rem; }
+  .fact-box {
+    background: var(--red-light); border-left: 4px solid var(--red);
+    padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 0 4px 4px 0;
+  }
+  .fact-box strong { color: var(--red-dark); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 0.4rem; }
+  .tip-box {
+    background: #EAF4EE; border-left: 4px solid var(--success);
+    padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 0 4px 4px 0;
+  }
+  .tip-box strong { color: var(--success); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 0.4rem; }
+  .table-wrap { overflow-x: auto; margin: 1.5rem 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { background: var(--ink); color: var(--white); padding: 0.6rem 0.9rem; text-align: left; }
+  td { padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--border); }
+  tr:nth-child(even) td { background: rgba(0,0,0,0.02); }
+  .lesson-nav { display: flex; gap: 1rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+  .btn { padding: 0.7rem 1.5rem; border-radius: 2px; font-size: 0.88rem; font-weight: 600;
+    cursor: pointer; border: none; transition: all 0.2s; }
+  .btn-primary { background: var(--red); color: white; }
+  .btn-primary:hover { background: var(--red-dark); }
+  .btn-outline { background: white; color: var(--ink); border: 1.5px solid var(--border); }
+  .btn-outline:hover { border-color: var(--ink-mid); }
+
+  /* ── FLASHCARDS ── */
+  .flashcards-screen { padding: 2rem; max-width: 900px; margin: 0 auto; }
+  .fc-header { text-align: center; margin-bottom: 2rem; }
+  .fc-header h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 0.5rem; }
+  .fc-header p { color: var(--ink-mid); }
+  .fc-controls { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+  .fc-category { padding: 0.45rem 1rem; border: 1.5px solid var(--border); border-radius: 20px;
+    font-size: 0.82rem; cursor: pointer; background: white; transition: all 0.2s; }
+  .fc-category.active { background: var(--red); color: white; border-color: var(--red); }
+  .fc-arena { perspective: 1200px; margin: 0 auto 2rem; max-width: 680px; }
+  .fc-card {
+    width: 100%; min-height: 260px; position: relative;
+    transform-style: preserve-3d; transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+    cursor: pointer;
+  }
+  .fc-card.flipped { transform: rotateY(180deg); }
+  .fc-face {
+    position: absolute; width: 100%; min-height: 260px;
+    backface-visibility: hidden; border-radius: 4px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 2.5rem; text-align: center;
+  }
+  .fc-front {
+    background: var(--white); border: 1px solid var(--border);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+  .fc-back {
+    background: var(--ink); color: white;
+    transform: rotateY(180deg);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.16);
+  }
+  .fc-tag { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.3rem 0.7rem; border-radius: 12px; margin-bottom: 1.25rem; }
+  .fc-front .fc-tag { background: var(--red-light); color: var(--red); }
+  .fc-back .fc-tag { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); }
+  .fc-question { font-family: 'Playfair Display', serif; font-size: 1.4rem; line-height: 1.4; }
+  .fc-answer { font-size: 1rem; line-height: 1.65; color: rgba(255,255,255,0.92); }
+  .fc-hint { font-size: 0.75rem; color: var(--ink-light); margin-top: 1.25rem; }
+  .fc-nav { display: flex; align-items: center; justify-content: center; gap: 1.5rem; }
+  .fc-btn { width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--border);
+    background: white; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center;
+    justify-content: center; transition: all 0.2s; }
+  .fc-btn:hover { border-color: var(--red); color: var(--red); }
+  .fc-counter { font-size: 0.85rem; color: var(--ink-mid); min-width: 80px; text-align: center; }
+  .fc-results { display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem; }
+  .fc-result-btn { padding: 0.6rem 1.5rem; border-radius: 2px; font-size: 0.85rem; font-weight: 600;
+    cursor: pointer; border: none; transition: all 0.2s; }
+  .fc-knew { background: var(--success); color: white; }
+  .fc-knew:hover { background: #1E5C38; }
+  .fc-review { background: var(--red-light); color: var(--red-dark); }
+  .fc-review:hover { background: var(--red); color: white; }
+
+  /* ── QUIZ ── */
+  .quiz-screen { padding: 2rem; max-width: 760px; margin: 0 auto; }
+  .quiz-header { text-align: center; margin-bottom: 2.5rem; }
+  .quiz-header h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 0.5rem; }
+  .quiz-setup { background: white; border: 1px solid var(--border); border-radius: 4px; padding: 2rem; }
+  .quiz-setup h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 1.25rem; }
+  .quiz-options { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem; }
+  .quiz-option-btn {
+    padding: 0.9rem; border: 1.5px solid var(--border); border-radius: 4px;
+    background: white; cursor: pointer; font-size: 0.85rem; transition: all 0.2s;
+    text-align: left;
+  }
+  .quiz-option-btn:hover { border-color: var(--red); }
+  .quiz-option-btn.selected { border-color: var(--red); background: var(--red-light); color: var(--red-dark); }
+  .q-progress { margin-bottom: 1.5rem; }
+  .q-progress-top { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--ink-mid); margin-bottom: 0.4rem; }
+  .q-progress-bar { height: 4px; background: var(--border); border-radius: 2px; }
+  .q-progress-fill { height: 100%; background: var(--red); border-radius: 2px; transition: width 0.4s; }
+  .q-card { background: white; border: 1px solid var(--border); border-radius: 4px; padding: 2rem; }
+  .q-num { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.75rem; }
+  .q-question { font-family: 'Playfair Display', serif; font-size: 1.25rem; margin-bottom: 1.75rem; line-height: 1.4; }
+  .q-choices { display: flex; flex-direction: column; gap: 0.65rem; }
+  .q-choice {
+    padding: 0.9rem 1.1rem; border: 1.5px solid var(--border); border-radius: 4px;
+    cursor: pointer; font-size: 0.9rem; background: white; text-align: left;
+    transition: all 0.15s; display: flex; align-items: center; gap: 0.75rem;
+  }
+  .q-choice:hover { border-color: var(--ink-mid); background: var(--cream); }
+  .q-choice.correct { border-color: var(--success); background: var(--success-light); }
+  .q-choice.wrong { border-color: var(--error); background: var(--error-light); }
+  .q-choice.selected { border-color: var(--blue-flag); background: #E8F0FB; }
+  .choice-letter { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid currentColor;
+    display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 600; flex-shrink: 0; }
+  .q-explanation { margin-top: 1.25rem; padding: 1rem; background: var(--cream); border-radius: 4px; font-size: 0.88rem; line-height: 1.6; }
+  .q-explanation strong { color: var(--success); }
+  .q-explanation.wrong-exp strong { color: var(--red); }
+  .q-actions { margin-top: 1.5rem; display: flex; justify-content: flex-end; }
+  .quiz-results { background: white; border: 1px solid var(--border); border-radius: 4px; padding: 2.5rem; text-align: center; }
+  .result-score { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 900; color: var(--red); }
+  .result-label { font-size: 0.85rem; color: var(--ink-mid); margin-bottom: 1.5rem; }
+  .result-msg { font-size: 1.1rem; margin-bottom: 2rem; }
+  .result-breakdown { display: flex; gap: 2rem; justify-content: center; margin-bottom: 2rem; flex-wrap: wrap; }
+  .rb-item { text-align: center; }
+  .rb-num { font-size: 1.75rem; font-weight: 700; }
+  .rb-num.correct { color: var(--success); }
+  .rb-num.wrong { color: var(--red); }
+  .rb-label { font-size: 0.75rem; color: var(--ink-mid); }
+
+  /* ── CHEATSHEET ── */
+  .cheat-screen { padding: 2rem; max-width: 1000px; margin: 0 auto; }
+  .cheat-screen h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 0.5rem; }
+  .cheat-screen > p { color: var(--ink-mid); margin-bottom: 2rem; }
+  .cheat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
+  .cheat-card { background: white; border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; }
+  .cheat-card h3 { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); margin-bottom: 1rem; }
+  .cheat-list { list-style: none; }
+  .cheat-list li { display: flex; gap: 0.5rem; font-size: 0.85rem; padding: 0.35rem 0;
+    border-bottom: 1px solid var(--border); line-height: 1.4; }
+  .cheat-list li:last-child { border-bottom: none; }
+  .cheat-list li::before { content: '🍁'; font-size: 0.7rem; flex-shrink: 0; margin-top: 0.15rem; }
+  .cheat-key { font-weight: 600; color: var(--ink); }
+  .cheat-val { color: var(--ink-mid); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .lessons-layout { grid-template-columns: 1fr; }
+    .lessons-sidebar { display: none; }
+    .lesson-content { padding: 1.5rem; }
+    nav { padding: 0 1rem; }
+    .nav-tab { padding: 1rem 0.75rem; font-size: 0.75rem; }
+    .hero { padding: 3rem 1.5rem 2.5rem; }
+    .hero-stats { gap: 1.5rem; }
+    .sections-grid { padding: 1.5rem; }
+    .flashcards-screen, .quiz-screen, .cheat-screen { padding: 1.25rem; }
+  }
+
+  /* ── MOBILE LESSONS SIDEBAR TOGGLE ── */
+  .mobile-lesson-nav { display: none; }
+  @media (max-width: 768px) {
+    .mobile-lesson-nav { display: flex; overflow-x: auto; gap: 0.5rem; padding: 1rem; background: white; border-bottom: 1px solid var(--border); }
+    .mobile-lesson-btn { white-space: nowrap; padding: 0.4rem 0.8rem; border-radius: 16px; border: 1px solid var(--border); font-size: 0.78rem; cursor: pointer; background: white; }
+    .mobile-lesson-btn.active { background: var(--red); color: white; border-color: var(--red); }
+  }
+
+  /* ── BADGES ── */
+  .badges-strip { display: flex; gap: 0.75rem; flex-wrap: wrap; padding: 1.5rem 2rem; background: white; border-bottom: 1px solid var(--border); }
+  .badge { padding: 0.35rem 0.9rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;
+    display: flex; align-items: center; gap: 0.4rem; }
+  .badge.earned { background: #FFF3CD; color: #856404; }
+  .badge.locked { background: var(--border); color: var(--ink-light); }
+
+  /* ── EXAM DAY TIPS ── */
+  .tips-screen { padding: 2rem; max-width: 760px; margin: 0 auto; }
+  .tips-screen h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 1.75rem; }
+  .tip-item { background: white; border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; margin-bottom: 1rem; display: flex; gap: 1.25rem; }
+  .tip-icon { font-size: 2rem; flex-shrink: 0; }
+  .tip-item h3 { font-weight: 600; margin-bottom: 0.4rem; }
+  .tip-item p { font-size: 0.88rem; color: var(--ink-mid); line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#" onclick="showScreen('home')">
+    <span class="maple-icon">🍁</span>
+    <span class="nav-title">Canada<span>Ready</span></span>
+  </a>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showScreen('home')">Home</button>
+    <button class="nav-tab" onclick="showScreen('lessons')">Lessons</button>
+    <button class="nav-tab" onclick="showScreen('flashcards')">Flashcards</button>
+    <button class="nav-tab" onclick="showScreen('quiz')">Quiz</button>
+    <button class="nav-tab" onclick="showScreen('cheatsheet')">Quick Reference</button>
+    <button class="nav-tab" onclick="showScreen('tips')">Exam Day</button>
+  </div>
+</nav>
+
+<!-- ══════════════ HOME ══════════════ -->
+<div id="screen-home" class="screen active">
+  <div class="hero">
+    <div class="hero-eyebrow">Official Citizenship Test Preparation</div>
+    <h1>Pass Your<br><em>Canadian Citizenship</em><br>Test with Confidence</h1>
+    <p>Everything you need from the official <em>Discover Canada</em> study guide — organized into lessons, flashcards, and practice quizzes.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">11</div><div class="stat-label">Topic Lessons</div></div>
+      <div class="stat"><div class="stat-num">80+</div><div class="stat-label">Flashcards</div></div>
+      <div class="stat"><div class="stat-num">60+</div><div class="stat-label">Practice Questions</div></div>
+      <div class="stat"><div class="stat-num">20</div><div class="stat-label">Min to Pass</div></div>
+    </div>
+    <button class="hero-cta" onclick="showScreen('lessons')">Start Studying →</button>
+  </div>
+
+  <div class="sections-grid">
+    <div class="section-card" onclick="showScreen('lessons'); setLesson(0)">
+      <div class="card-num">01 — LESSON</div>
+      <h3>Rights & Responsibilities</h3>
+      <p>The Canadian Charter of Rights and Freedoms, citizenship duties, and the Oath of Citizenship.</p>
+      <div class="card-meta">📖 ~8 min read</div>
+    </div>
+    <div class="section-card" onclick="showScreen('lessons'); setLesson(1)">
+      <div class="card-num">02 — LESSON</div>
+      <h3>Who We Are</h3>
+      <p>Three founding peoples — Aboriginal, French, and British — and Canada's multicultural identity.</p>
+      <div class="card-meta">📖 ~7 min read</div>
+    </div>
+    <div class="section-card" onclick="showScreen('lessons'); setLesson(2)">
+      <div class="card-num">03 — LESSON</div>
+      <h3>Canada's History</h3>
+      <p>From Indigenous peoples to Confederation, the Wars, and modern Canada's formation.</p>
+      <div class="card-meta">📖 ~12 min read</div>
+    </div>
+    <div class="section-card" onclick="showScreen('lessons'); setLesson(3)">
+      <div class="card-num">04 — LESSON</div>
+      <h3>How Canadians Govern</h3>
+      <p>Federal state, parliamentary democracy, constitutional monarchy, and how laws are made.</p>
+      <div class="card-meta">📖 ~8 min read</div>
+    </div>
+    <div class="section-card" onclick="showScreen('lessons'); setLesson(4)">
+      <div class="card-num">05 — LESSON</div>
+      <h3>Federal Elections</h3>
+      <p>Voting procedures, electoral districts, political parties, and how government is formed.</p>
+      <div class="card-meta">📖 ~6 min read</div>
+    </div>
+    <div class="section-card" onclick="showScreen('lessons'); setLesson(5)">
+      <div class="card-num">06 — LESSON</div>
+      <h3>Justice System</h3>
+      <p>Rule of law, courts, police, and your legal rights as a Canadian.</p>
+      <div class="card-meta">📖 ~5 min read</div>
+    </div>
+    <div class="section-card" onclick="showScreen('lessons'); setLesson(6)">
+      <div class="card-num">07 — LESSON</div>
+      <h3>Canadian Symbols</h3>
+      <p>The flag, maple leaf, beaver, national anthem, Order of Canada, and important dates.</p>
+      <div class="card-meta">📖 ~6 min read</div>
+    </div>
+    <div class="section-card" onclick="showScreen('lessons'); setLesson(7)">
+      <div class="card-num">08 — LESSON</div>
+      <h3>Canada's Economy</h3>
+      <p>Three industry sectors, NAFTA, trade relationships, and economic milestones.</p>
+      <div class="card-meta">📖 ~5 min read</div>
+    </div>
+    <div class="section-card" onclick="showScreen('lessons'); setLesson(8)">
+      <div class="card-num">09 — LESSON</div>
+      <h3>Canada's Regions</h3>
+      <p>All 10 provinces and 3 territories, their capitals, and key characteristics.</p>
+      <div class="card-meta">📖 ~10 min read</div>
+    </div>
+    <div class="section-card" onclick="showScreen('flashcards')">
+      <div class="card-num">— FLASHCARDS</div>
+      <h3>Test Your Memory</h3>
+      <p>80+ cards covering dates, names, facts, and key concepts — sorted by category.</p>
+      <div class="card-meta">🃏 Spaced repetition</div>
+    </div>
+    <div class="section-card" onclick="showScreen('quiz')">
+      <div class="card-num">— PRACTICE TEST</div>
+      <h3>Simulated Exam</h3>
+      <p>Multiple-choice questions in the exact format of the real citizenship test.</p>
+      <div class="card-meta">✅ Instant feedback</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ LESSONS ══════════════ -->
+<div id="screen-lessons" class="screen">
+  <div class="lessons-layout">
+    <aside class="lessons-sidebar">
+      <div class="sidebar-head">Study Topics</div>
+      <div id="lesson-menu"></div>
+    </aside>
+    <main>
+      <div class="mobile-lesson-nav" id="mobile-lesson-nav"></div>
+      <div class="lesson-content" id="lesson-content"></div>
+    </main>
+  </div>
+</div>
+
+<!-- ══════════════ FLASHCARDS ══════════════ -->
+<div id="screen-flashcards" class="screen">
+  <div class="flashcards-screen">
+    <div class="fc-header">
+      <h2>Flashcards</h2>
+      <p>Click a card to reveal the answer. Mark cards to track what you know.</p>
+    </div>
+    <div class="fc-controls">
+      <button class="fc-category active" onclick="setFCCategory('all', this)">All</button>
+      <button class="fc-category" onclick="setFCCategory('history', this)">History</button>
+      <button class="fc-category" onclick="setFCCategory('government', this)">Government</button>
+      <button class="fc-category" onclick="setFCCategory('symbols', this)">Symbols & Facts</button>
+      <button class="fc-category" onclick="setFCCategory('geography', this)">Geography</button>
+      <button class="fc-category" onclick="setFCCategory('rights', this)">Rights</button>
+    </div>
+    <div class="fc-arena">
+      <div class="fc-card" id="fc-card" onclick="flipCard()">
+        <div class="fc-face fc-front">
+          <div class="fc-tag" id="fc-cat-tag">—</div>
+          <div class="fc-question" id="fc-question">Loading…</div>
+          <div class="fc-hint">Click to reveal answer</div>
+        </div>
+        <div class="fc-face fc-back">
+          <div class="fc-tag">Answer</div>
+          <div class="fc-answer" id="fc-answer">—</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-nav">
+      <button class="fc-btn" onclick="fcPrev()">←</button>
+      <span class="fc-counter" id="fc-counter">1 / 0</span>
+      <button class="fc-btn" onclick="fcNext()">→</button>
+    </div>
+    <div class="fc-results">
+      <button class="fc-result-btn fc-knew" onclick="markKnew()">✓ Got it</button>
+      <button class="fc-result-btn fc-review" onclick="markReview()">↩ Review again</button>
+    </div>
+    <p style="text-align:center;font-size:0.78rem;color:var(--ink-light);margin-top:1.25rem" id="fc-score-display"></p>
+  </div>
+</div>
+
+<!-- ══════════════ QUIZ ══════════════ -->
+<div id="screen-quiz" class="screen">
+  <div class="quiz-screen">
+    <div class="quiz-header">
+      <h2>Practice Quiz</h2>
+      <p style="color:var(--ink-mid)">Multiple-choice questions in the format of the real citizenship test.</p>
+    </div>
+    <div id="quiz-body"></div>
+  </div>
+</div>
+
+<!-- ══════════════ CHEAT SHEET ══════════════ -->
+<div id="screen-cheatsheet" class="screen">
+  <div class="cheat-screen">
+    <h2>Quick Reference</h2>
+    <p>The most important facts, dates, names, and numbers — all on one page.</p>
+    <div class="cheat-grid" id="cheat-grid"></div>
+  </div>
+</div>
+
+<!-- ══════════════ EXAM DAY TIPS ══════════════ -->
+<div id="screen-tips" class="screen">
+  <div class="tips-screen">
+    <h2>Exam Day Guide</h2>
+    <div class="tip-item"><div class="tip-icon">📋</div><div><h3>What to Bring</h3><p>Your Notice to Appear, a valid photo ID, and permanent resident card. Arrive 15 minutes early. The test is usually written (20 questions, 30 minutes) but can be an oral interview.</p></div></div>
+    <div class="tip-item"><div class="tip-icon">✅</div><div><h3>Passing Score</h3><p>You need to answer at least 15 out of 20 questions correctly (75%) to pass. If you fail, you will be invited for an interview with a citizenship officer.</p></div></div>
+    <div class="tip-item"><div class="tip-icon">🌐</div><div><h3>Language Requirement</h3><p>Applicants between 18–54 must demonstrate adequate knowledge of English or French. Adults 55+ are exempt from the language requirement AND the written test.</p></div></div>
+    <div class="tip-item"><div class="tip-icon">📌</div><div><h3>Most Tested Topics</h3><p>Rights & responsibilities, how Parliament works, voting procedures, Canadian history milestones (Confederation 1867, WWII, Charter 1982), provinces & capitals, and key symbols.</p></div></div>
+    <div class="tip-item"><div class="tip-icon">🏛️</div><div><h3>After Passing</h3><p>You'll receive a Notice to Appear for the citizenship ceremony. At the ceremony: take the Oath of Citizenship, sign the oath form, and receive your Canadian Citizenship Certificate.</p></div></div>
+    <div class="tip-item"><div class="tip-icon">📞</div><div><h3>Need Help?</h3><p>Call IRCC at 1-888-242-2100 (toll-free in Canada). Visit www.canada.ca/en/immigration-refugees-citizenship for the official Discover Canada guide, free language classes, and application tracking.</p></div></div>
+    <div class="tip-item"><div class="tip-icon">🧠</div><div><h3>Study Strategy</h3><p>Complete all 9 lessons, do the flashcards until you get 80%+ "Got it" marks, then take at least 3 full practice quizzes. Focus extra time on dates, names of Prime Ministers on bills, and the structure of Parliament.</p></div></div>
+    <div class="tip-item"><div class="tip-icon">🍁</div><div><h3>Key Oath Pledge</h3><p>You will swear allegiance to the Sovereign (the King or Queen of Canada), promise to faithfully observe the laws of Canada including the Constitution, and fulfil your duties as a Canadian citizen.</p></div></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach((t,i) => {
+    const map = ['home','lessons','flashcards','quiz','cheatsheet','tips'];
+    t.classList.toggle('active', map[i] === id);
+  });
+  document.getElementById('screen-' + id).classList.add('active');
+  window.scrollTo(0,0);
+  if (id === 'lessons' && currentLesson === null) setLesson(0);
+  if (id === 'flashcards') initFlashcards();
+  if (id === 'quiz') initQuiz();
+  if (id === 'cheatsheet') renderCheatSheet();
+}
+
+// ═══════════════════════════════════════
+// LESSONS DATA
+// ═══════════════════════════════════════
+const lessons = [
+  {
+    title: "Rights & Responsibilities of Citizenship",
+    content: `
+      <div class="lesson-eyebrow">Lesson 01</div>
+      <h2>Rights and Responsibilities of Citizenship</h2>
+      <div class="lesson-body">
+        <p>Canadian citizens have both rights and responsibilities. These come from our history, are secured by Canadian law, and reflect our shared traditions, identity, and values.</p>
+
+        <h3>Sources of Canadian Law</h3>
+        <p>Canadian law has several sources:</p>
+        <ul>
+          <li>Laws passed by Parliament and provincial legislatures</li>
+          <li>English common law</li>
+          <li>The civil code of France (in Quebec)</li>
+          <li>The unwritten constitution inherited from Great Britain</li>
+        </ul>
+        <p>Together these secure an 800-year-old tradition of ordered liberty, dating to the <strong>Magna Carta signed in 1215</strong> in England (the Great Charter of Freedoms).</p>
+
+        <div class="fact-box"><strong>Key Fact</strong>Habeas corpus — the right to challenge unlawful detention by the state — comes from English common law.</div>
+
+        <h3>Fundamental Freedoms</h3>
+        <ul>
+          <li>Freedom of conscience and religion</li>
+          <li>Freedom of thought, belief, opinion and expression (including speech and press)</li>
+          <li>Freedom of peaceful assembly</li>
+          <li>Freedom of association</li>
+        </ul>
+
+        <h3>The Canadian Charter of Rights and Freedoms (1982)</h3>
+        <p>The Constitution of Canada was amended in 1982 to entrench the <em>Canadian Charter of Rights and Freedoms</em>. It begins: <em>"Whereas Canada is founded upon principles that recognize the supremacy of God and the rule of law."</em></p>
+        <p>Important rights in the Charter:</p>
+        <ul>
+          <li><strong>Mobility Rights</strong> — Live and work anywhere in Canada; enter/leave freely; apply for a passport</li>
+          <li><strong>Aboriginal Peoples' Rights</strong> — Charter rights will not adversely affect treaty or other Aboriginal rights</li>
+          <li><strong>Official Language Rights</strong> — French and English have equal status in Parliament and government</li>
+          <li><strong>Multiculturalism</strong> — A fundamental characteristic of Canadian heritage and identity</li>
+        </ul>
+
+        <h3>Equality of Women and Men</h3>
+        <p>Men and women are equal under Canadian law. Canada does not tolerate spousal abuse, "honour killings," female genital mutilation, forced marriage, or other gender-based violence. Those guilty of these crimes are severely punished.</p>
+
+        <h3>Citizenship Responsibilities</h3>
+        <ul>
+          <li><strong>Obeying the law</strong> — No person or group is above the law</li>
+          <li><strong>Taking responsibility for yourself and your family</strong> — Getting a job, caring for family</li>
+          <li><strong>Serving on a jury</strong> — A legal requirement when called</li>
+          <li><strong>Voting in elections</strong> — The right to vote comes with a responsibility to use it</li>
+          <li><strong>Helping others in the community</strong> — Volunteering</li>
+          <li><strong>Protecting the environment and heritage</strong> — Every citizen's role</li>
+        </ul>
+
+        <h3>Defending Canada</h3>
+        <p>There is no compulsory military service, but serving in the Canadian Forces (navy, army, air force) is a noble way to contribute. You may also serve in the Coast Guard, police, or fire department.</p>
+
+        <h3>The Oath of Citizenship</h3>
+        <div class="fact-box"><strong>Memorize This</strong>
+        "I swear (or affirm) that I will be faithful and bear true allegiance to His Majesty King Charles the Third, King of Canada, His Heirs and Successors, and that I will faithfully observe the laws of Canada, including the Constitution, which recognizes and affirms the Aboriginal and treaty rights of First Nations, Inuit and Métis peoples, and fulfil my duties as a Canadian citizen."</div>
+
+        <div class="tip-box"><strong>Exam Tip</strong>In Canada, we pledge loyalty to the Sovereign (a person who represents all Canadians), NOT to a document, flag, or country directly.</div>
+      </div>
+    `
+  },
+  {
+    title: "Who We Are",
+    content: `
+      <div class="lesson-eyebrow">Lesson 02</div>
+      <h2>Who We Are</h2>
+      <div class="lesson-body">
+        <p>Canada is the only constitutional monarchy in North America and has inherited the oldest continuous constitutional tradition in the world. Our institutions uphold <strong>Peace, Order and Good Government</strong> — a key phrase in the British North America Act of 1867.</p>
+
+        <h3>Three Founding Peoples</h3>
+        <p>To understand what it means to be Canadian, you need to know about our three founding peoples: <strong>Aboriginal, French, and British</strong>.</p>
+
+        <h3>Aboriginal Peoples</h3>
+        <p>The ancestors of Aboriginal peoples migrated from Asia thousands of years ago. They were well established long before Europeans arrived.</p>
+        <p>Aboriginal peoples are divided into three groups:</p>
+        <ul>
+          <li><strong>First Nations (Indian)</strong> — About 65% of Aboriginal people. About half live on reserve land (600+ communities); half live off-reserve, mainly in cities.</li>
+          <li><strong>Inuit</strong> — Means "the people" in Inuktitut. Live in small, scattered communities across the Arctic. About 4% of Aboriginal people.</li>
+          <li><strong>Métis</strong> — People of mixed Aboriginal and European ancestry. Mostly in Prairie provinces. Speak their own dialect, Michif. About 30% of Aboriginal people.</li>
+        </ul>
+        <div class="fact-box"><strong>Key Fact</strong>Territorial rights were first guaranteed through the Royal Proclamation of 1763 by King George III. From the 1800s to 1980s, Aboriginal children were placed in residential schools — Ottawa formally apologized in 2008.</div>
+
+        <h3>English and French</h3>
+        <p>Canadian society stems largely from English-speaking and French-speaking Christian civilizations. English and French are the country's two official languages.</p>
+        <ul>
+          <li><strong>18 million Anglophones</strong> (English as first language)</li>
+          <li><strong>7 million Francophones</strong> (French as first language)</li>
+          <li>The Acadians — descendants of French colonists who began settling in the Maritimes in 1604</li>
+          <li>The Quebecois — mostly French-speaking descendants of 8,500 settlers from the 1600s–1700s</li>
+          <li><strong>New Brunswick</strong> is the only officially bilingual province</li>
+        </ul>
+
+        <h3>Diversity in Canada</h3>
+        <p>The largest ethnic groups: English, French, Scottish, Irish, German, Italian, Chinese, Aboriginal, Ukrainian, Dutch, South Asian, and Scandinavian. Since the 1970s, most immigrants have come from Asian countries.</p>
+
+        <h3>Religion</h3>
+        <p>The great majority of Canadians identify as Christians (largest group: Catholic, then various Protestant churches). Canada's state has traditionally partnered with faith communities. Canada's diversity also includes gay and lesbian Canadians, who enjoy full protection under law, including access to civil marriage.</p>
+
+        <div class="tip-box"><strong>Exam Tip</strong>"Unity in Diversity" — Canada celebrates multiculturalism. John Buchan (1st Baron Tweedsmuir), a popular Governor General, encouraged immigrant groups to retain their individuality while contributing to the national character.</div>
+      </div>
+    `
+  },
+  {
+    title: "Canada's History",
+    content: `
+      <div class="lesson-eyebrow">Lesson 03</div>
+      <h2>Canada's History</h2>
+      <div class="lesson-body">
+        <h3>First Europeans</h3>
+        <p>Vikings from Iceland colonized Greenland 1,000 years ago and reached Labrador and Newfoundland. L'Anse aux Meadows is a World Heritage site.</p>
+        <p><strong>1497</strong> — John Cabot: first to map Canada's East Coast (claimed for England)</p>
+        <p><strong>1534–1542</strong> — Jacques Cartier: three voyages, claimed land for France. Heard the Iroquoian word <em>kanata</em> ("village") — origin of the name Canada.</p>
+
+        <h3>Royal New France</h3>
+        <p><strong>1604</strong> — First European settlement north of Florida by Pierre de Monts and Samuel de Champlain.</p>
+        <p><strong>1608</strong> — Champlain built a fortress at present-day Québec City.</p>
+        <p>The French and Aboriginal people collaborated in the fur trade (beaver pelts). Leaders like Jean Talon, Bishop Laval, and Count Frontenac built a French Empire from Hudson Bay to the Gulf of Mexico.</p>
+
+        <h3>Struggle for a Continent</h3>
+        <p><strong>1670</strong> — Hudson's Bay Company given exclusive trading rights.</p>
+        <p><strong>1759</strong> — British defeated French at the Battle of the Plains of Abraham (Québec City), ending France's empire in America. Commanders Wolfe and Montcalm both killed.</p>
+
+        <h3>Province of Quebec & Quebec Act</h3>
+        <p>Britain renamed the colony "Province of Quebec." The <strong>Quebec Act of 1774</strong> allowed religious freedom for Catholics, permitted them to hold public office, and restored French civil law.</p>
+
+        <h3>United Empire Loyalists (1776)</h3>
+        <p>When 13 colonies declared independence, 40,000+ Loyalists fled to Nova Scotia and Quebec. Joseph Brant led thousands of Loyalist Mohawk Indians to Canada. About 3,000 black Loyalists came as well.</p>
+
+        <h3>Beginnings of Democracy</h3>
+        <p>First representative assembly elected in <strong>Halifax, Nova Scotia, in 1758</strong>. The Constitutional Act of 1791 divided Quebec into <strong>Upper Canada</strong> (Ontario) and <strong>Lower Canada</strong> (Quebec).</p>
+
+        <h3>Abolition of Slavery</h3>
+        <p><strong>1793</strong> — Upper Canada (led by Lieutenant Governor John Graves Simcoe) became the first province in the Empire to move toward abolition.</p>
+        <p><strong>1807</strong> — British Parliament prohibited buying/selling of slaves.</p>
+        <p><strong>1833</strong> — Slavery abolished throughout the British Empire. Thousands of slaves escaped via the Underground Railroad.</p>
+
+        <h3>War of 1812</h3>
+        <p>The US launched an invasion in June 1812, believing Canada would be easy to conquer. Canadian volunteers, First Nations (including Shawnee led by Chief Tecumseh), and British soldiers repelled the Americans. Key events:</p>
+        <ul>
+          <li>Major-General Sir Isaac Brock captured Detroit but was killed at Queenston Heights</li>
+          <li>Battle of Châteauguay: 460 French Canadiens turned back 4,000 Americans</li>
+          <li>Americans burned Government House and Parliament Buildings in York (Toronto)</li>
+          <li>In retaliation, Major-General Robert Ross burned the White House in Washington, D.C.</li>
+          <li>Laura Secord warned Lt. FitzGibbon of a planned American attack — contributed to victory at Beaver Dams</li>
+        </ul>
+        <div class="fact-box"><strong>Key Result</strong>The present-day Canada-USA border is partly an outcome of the War of 1812, which ensured Canada remained independent.</div>
+
+        <h3>Responsible Government & Confederation</h3>
+        <p><strong>1840</strong> — Upper and Lower Canada united as Province of Canada.</p>
+        <p><strong>1847–48</strong> — Nova Scotia first colony to achieve full responsible government.</p>
+        <p><strong>1864–1867</strong> — Fathers of Confederation (representatives of Nova Scotia, New Brunswick, and Province of Canada) established a new country: the Dominion of Canada.</p>
+        <p><strong>July 1, 1867</strong> — Dominion of Canada officially born. British North America Act passed by British Parliament. (Celebrated as "Dominion Day" until 1982, now Canada Day.)</p>
+
+        <h3>Canada's First Prime Minister</h3>
+        <p><strong>Sir John Alexander Macdonald</strong> — born in Scotland, became Canada's first PM in 1867. Portrait on the $10 bill. January 11 is Sir John A. Macdonald Day.</p>
+        <p><strong>Sir George-Étienne Cartier</strong> — key Quebec architect of Confederation.</p>
+
+        <h3>Expansion of the Dominion</h3>
+        <div class="table-wrap">
+        <table>
+          <tr><th>Year</th><th>Province/Territory Joined</th></tr>
+          <tr><td>1867</td><td>Ontario, Quebec, Nova Scotia, New Brunswick</td></tr>
+          <tr><td>1870</td><td>Manitoba, Northwest Territories</td></tr>
+          <tr><td>1871</td><td>British Columbia</td></tr>
+          <tr><td>1873</td><td>Prince Edward Island</td></tr>
+          <tr><td>1898</td><td>Yukon Territory</td></tr>
+          <tr><td>1905</td><td>Alberta, Saskatchewan</td></tr>
+          <tr><td>1949</td><td>Newfoundland and Labrador</td></tr>
+          <tr><td>1999</td><td>Nunavut</td></tr>
+        </table>
+        </div>
+
+        <h3>Canadian Pacific Railway (CPR)</h3>
+        <p>BC joined Canada in 1871 after Ottawa promised a railway. On <strong>November 7, 1885</strong>, Donald Smith (Lord Strathcona) drove the last spike. The project was built partly by Chinese labour; afterward, Chinese faced the discriminatory Head Tax. Canada apologized in 2006.</p>
+
+        <h3>First World War (1914–1918)</h3>
+        <p>More than 600,000 Canadians served (volunteers from a population of 8 million). The <strong>Canadian Corps captured Vimy Ridge on April 9, 1917</strong> — celebrated as Vimy Day. General Sir Arthur Currie was Canada's greatest soldier. 60,000 Canadians killed, 170,000 wounded.</p>
+        <p>In 1917, women were given the right to vote in federal elections (first to nurses, then women related to men in active service). In 1918, most Canadian women 21+ could vote. Agnes Macphail became the first woman MP in 1921.</p>
+
+        <h3>Between the Wars (1919–1939)</h3>
+        <p>The "Roaring Twenties" — prosperity and low unemployment. The stock market crash of 1929 led to the Great Depression ("Dirty Thirties") — unemployment reached 27% in 1933.</p>
+        <p>The Bank of Canada was created in 1934.</p>
+
+        <h3>Second World War (1939–1945)</h3>
+        <p>Over one million Canadians and Newfoundlanders served; 44,000 killed.</p>
+        <p><strong>D-Day (June 6, 1944)</strong> — 15,000 Canadian troops stormed Juno Beach. Approximately 1 in 10 Allied soldiers on D-Day was Canadian.</p>
+        <p>The Royal Canadian Navy saw its finest hour in the Battle of the Atlantic. By war's end, Canada had the third-largest navy in the world.</p>
+        <p>Japan surrendered on August 14, 1945. During the war, Canadians of Japanese origin were wrongly relocated — government apologized in 1988 and compensated victims.</p>
+
+        <h3>Remembrance Day — November 11</h3>
+        <p>Canadians wear the red poppy and observe a moment of silence at 11:00 AM on the 11th day of the 11th month. Over 1 million Canadians have served; 110,000 have given their lives.</p>
+        <div class="tip-box"><strong>Exam Tip</strong>"In Flanders Fields" was composed by Canadian medical officer Lieutenant-Colonel John McCrae in 1915.</div>
+
+        <h3>Modern Canada</h3>
+        <p>Oil discovered in Alberta in 1947. Canada joined NATO and NORAD (with the US). The Official Languages Act (1969) guarantees French and English services across the federal government. Quebec sovereignty referendums defeated in 1980 and 1995.</p>
+      </div>
+    `
+  },
+  {
+    title: "How Canadians Govern Themselves",
+    content: `
+      <div class="lesson-eyebrow">Lesson 04</div>
+      <h2>How Canadians Govern Themselves</h2>
+      <div class="lesson-body">
+        <p>Canada's system of government has three key characteristics: it is a <strong>federal state</strong>, a <strong>parliamentary democracy</strong>, and a <strong>constitutional monarchy</strong>.</p>
+
+        <h3>Federal State</h3>
+        <p>There are federal, provincial, territorial, and municipal governments in Canada. Responsibilities were defined in the British North America Act (now the <em>Constitution Act, 1867</em>).</p>
+
+        <div class="table-wrap"><table>
+          <tr><th>Federal Government</th><th>Provincial Government</th><th>Shared</th></tr>
+          <tr><td>Defence, foreign policy, criminal law, citizenship, currency, navigation, interprovincial trade, communications</td><td>Education, health, natural resources, property rights, civil rights, highways, municipal government</td><td>Agriculture, immigration</td></tr>
+        </table></div>
+
+        <p>Every province has its own elected Legislative Assembly. The three northern territories have small populations and do not have full provincial status.</p>
+
+        <h3>Parliamentary Democracy</h3>
+        <p>The people elect members to the House of Commons and to provincial/territorial legislatures. Parliament has three parts:</p>
+        <ul>
+          <li><strong>The Sovereign</strong> (King or Queen) — represented by the Governor General</li>
+          <li><strong>The Senate</strong> — Senators appointed by the Governor General on PM's advice, serve until age 75</li>
+          <li><strong>The House of Commons</strong> — Members of Parliament elected by the people</li>
+        </ul>
+        <p>A bill must be passed by BOTH the House and the Senate, then receive <strong>Royal Assent</strong> from the Governor General before becoming law.</p>
+
+        <h3>How a Bill Becomes Law</h3>
+        <div class="table-wrap"><table>
+          <tr><th>Step</th><th>What Happens</th></tr>
+          <tr><td>1. First Reading</td><td>Bill is read for the first time and printed</td></tr>
+          <tr><td>2. Second Reading</td><td>Members debate the bill's principle</td></tr>
+          <tr><td>3. Committee Stage</td><td>Bill studied clause by clause</td></tr>
+          <tr><td>4. Report Stage</td><td>Members may make amendments</td></tr>
+          <tr><td>5. Third Reading</td><td>Members debate and vote</td></tr>
+          <tr><td>6. Senate</td><td>Bill follows similar process in the Senate</td></tr>
+          <tr><td>7. Royal Assent</td><td>Bill receives royal assent → becomes law</td></tr>
+        </table></div>
+
+        <h3>Constitutional Monarchy</h3>
+        <p>Canada's Head of State is a hereditary Sovereign (currently <strong>King Charles III</strong>) who reigns in accordance with the Constitution. The Sovereign is a symbol of Canadian sovereignty and a guardian of constitutional freedoms.</p>
+        <p>The Sovereign is represented in Canada by the <strong>Governor General</strong>, appointed by the Sovereign on the PM's advice, usually for five years. In each province, the Sovereign is represented by the <strong>Lieutenant Governor</strong>.</p>
+
+        <div class="fact-box"><strong>Key Distinction</strong>Head of State = the Sovereign (represented by Governor General). Head of Government = the Prime Minister.</div>
+
+        <h3>The Three Branches</h3>
+        <ul>
+          <li><strong>Executive Branch</strong> — Prime Minister and Cabinet</li>
+          <li><strong>Legislative Branch</strong> — Senate and House of Commons</li>
+          <li><strong>Judicial Branch</strong> — Supreme Court of Canada (9 judges) and lower courts</li>
+        </ul>
+
+        <h3>Provincial and Territorial Government</h3>
+        <p>Each province/territory has an elected legislature. Members are called MLAs (Members of the Legislative Assembly), MNAs (Quebec), MPPs (Ontario), or MHAs (Newfoundland).</p>
+        <p>In each province, the <strong>Premier</strong> has a role similar to the Prime Minister. In territories, the <strong>Commissioner</strong> represents the federal government.</p>
+
+        <h3>Municipal Government</h3>
+        <p>Municipal (local) governments are responsible for: urban/regional planning, streets/roads, sanitation, firefighting, ambulance, recreation, public transit, and local health. Usually led by a Mayor (or Reeve) and councillors.</p>
+
+        <div class="tip-box"><strong>Exam Tip</strong>Canada is a constitutional monarchy — NOT a republic. The Prime Minister runs the government, but the King/Queen is Head of State. Other constitutional monarchies include Denmark, Norway, Sweden, Australia, New Zealand, Spain, Thailand, Japan, Jordan, and Morocco.</div>
+      </div>
+    `
+  },
+  {
+    title: "Federal Elections & Voting",
+    content: `
+      <div class="lesson-eyebrow">Lesson 05</div>
+      <h2>Federal Elections</h2>
+      <div class="lesson-body">
+        <p>Canadians vote in elections for people to represent them in the House of Commons. Members of the House of Commons are called Members of Parliament (MPs).</p>
+
+        <h3>How Elections Work</h3>
+        <ul>
+          <li>Federal elections are held every four years (third Monday in October)</li>
+          <li>The PM may ask the Governor General to call an earlier election</li>
+          <li>Canada is divided into <strong>338 electoral districts</strong> (ridings/constituencies)</li>
+          <li>Each riding elects one MP — the candidate with the most votes wins</li>
+          <li>Canadian citizens 18+ may run as candidates</li>
+        </ul>
+
+        <h3>Voting Eligibility</h3>
+        <p>To vote in a federal election you must be:</p>
+        <ul>
+          <li>A Canadian citizen</li>
+          <li>At least 18 years old on voting day</li>
+          <li>On the voters' list</li>
+        </ul>
+        <div class="fact-box"><strong>Key Fact</strong>Your vote is a secret ballot. No one can watch you vote, and you are never required to tell anyone how you voted — including your employer or family.</div>
+
+        <h3>Elections Canada</h3>
+        <p>The National Register of Electors is maintained by <strong>Elections Canada</strong>, a neutral agency of Parliament. Once an election is called, Elections Canada mails a voter information card listing when and where to vote.</p>
+
+        <h3>Voting Procedure</h3>
+        <ol style="margin:0.5rem 0 1rem 1.5rem">
+          <li>Go to your polling station (on your voter information card)</li>
+          <li>Bring the card + proof of identity and address</li>
+          <li>Mark an X in the circle next to your chosen candidate</li>
+          <li>Fold your ballot and give to poll official, who tears off the ballot number</li>
+          <li>Deposit in the ballot box — results announced after polls close</li>
+        </ol>
+
+        <h3>After an Election</h3>
+        <p>The leader of the party with the most seats is invited by the Governor General to form the government and becomes <strong>Prime Minister</strong>.</p>
+        <ul>
+          <li><strong>Majority government</strong> — party holds at least half the seats in the House of Commons</li>
+          <li><strong>Minority government</strong> — party holds less than half the seats</li>
+        </ul>
+        <p>The PM chooses the <strong>Cabinet ministers</strong>, who run federal government departments. The PM and Cabinet are called simply "the Cabinet."</p>
+        <p>Other parties not in power are <strong>opposition parties</strong>. The party with the most opposition seats is the <strong>Official Opposition (Her/His Majesty's Loyal Opposition)</strong>.</p>
+
+        <h3>Three Major Political Parties</h3>
+        <ul>
+          <li>Conservative Party</li>
+          <li>New Democratic Party (NDP)</li>
+          <li>Liberal Party</li>
+        </ul>
+
+        <h3>Confidence of the House</h3>
+        <p>The PM and party in power govern as long as they have the confidence of the majority of MPs. If a majority vote against a major government decision (a "confidence vote"), the party in power is defeated — usually resulting in the PM asking the Governor General to call an election.</p>
+
+        <div class="tip-box"><strong>Exam Tip</strong>Canada uses the "first past the post" system — the candidate with the most votes wins the riding, even without a majority. Today every citizen 18+ may vote — but this was not always so: Aboriginal peoples gained the right to vote only in 1960; Japanese Canadians in 1948.</div>
+      </div>
+    `
+  },
+  {
+    title: "The Justice System",
+    content: `
+      <div class="lesson-eyebrow">Lesson 06</div>
+      <h2>The Justice System</h2>
+      <div class="lesson-body">
+        <p>The Canadian justice system guarantees everyone <strong>due process under the law</strong>. Our judicial system is founded on the <strong>presumption of innocence</strong> — everyone is innocent until proven guilty.</p>
+
+        <h3>Principles of the Legal System</h3>
+        <ul>
+          <li><strong>Rule of law</strong> — Everyone, including judges, politicians, and police, is subject to the law</li>
+          <li><strong>Freedom under the law</strong></li>
+          <li><strong>Democratic principles</strong></li>
+          <li><strong>Due process</strong> — Government must respect all legal rights a person is entitled to</li>
+        </ul>
+
+        <h3>Courts</h3>
+        <ul>
+          <li><strong>Supreme Court of Canada</strong> — Highest court; 9 judges appointed by the Governor General</li>
+          <li><strong>Federal Court of Canada</strong> — Deals with federal government matters</li>
+          <li><strong>Provincial Courts</strong> — Appeal courts, trial courts (Court of Queen's/King's Bench), family courts, traffic courts, small claims courts</li>
+        </ul>
+
+        <h3>Police</h3>
+        <ul>
+          <li><strong>Royal Canadian Mounted Police (RCMP / "the Mounties")</strong> — National police force; enforce federal laws throughout Canada; serve as provincial police in all provinces/territories EXCEPT Ontario and Quebec</li>
+          <li>Ontario and Quebec have their own provincial police forces</li>
+          <li>Municipal police departments in all provinces</li>
+        </ul>
+        <p>You can question the police about their service or conduct. Most police forces have processes to bring your concerns and seek action.</p>
+
+        <h3>Getting Legal Help</h3>
+        <p>Lawyers can help with legal problems and act for you in court. If you cannot pay, most communities have legal aid services free of charge or at low cost.</p>
+
+        <div class="tip-box"><strong>Remember</strong>The police are there to help you. You can ask for help in any situation — accident, theft, assault, or if someone you know has gone missing.</div>
+      </div>
+    `
+  },
+  {
+    title: "Canadian Symbols",
+    content: `
+      <div class="lesson-eyebrow">Lesson 07</div>
+      <h2>Canadian Symbols</h2>
+      <div class="lesson-body">
+        <h3>The Canadian Crown</h3>
+        <p>The Crown has been a symbol of the state in Canada for 400 years. The Crown symbolizes government, including Parliament, legislatures, courts, police, and the Canadian Forces. Canada has been a constitutional monarchy since Confederation in 1867.</p>
+
+        <h3>Flags in Canada</h3>
+        <ul>
+          <li>The <strong>Canadian flag (Maple Leaf)</strong> was first raised on <strong>February 15, 1965</strong></li>
+          <li>Red-white-red pattern comes from the flag of the Royal Military College, Kingston (founded 1876)</li>
+          <li>Red and white have been Canada's national colours since 1921 (assigned by King George V)</li>
+          <li>The <strong>Union Jack</strong> is Canada's official Royal Flag</li>
+          <li>The <strong>Canadian Red Ensign</strong> served as the flag for about 100 years; still carried officially by veterans</li>
+        </ul>
+
+        <h3>The Maple Leaf</h3>
+        <p>Canada's best-known symbol. Adopted by French Canadians in the 1700s. Appeared on Canadian uniforms and insignia since the 1850s. Carved into the headstones of fallen soldiers.</p>
+
+        <h3>The Fleur-de-Lys</h3>
+        <p>Symbol of French royalty for over 1,000 years, including New France. In 1948, Quebec adopted its own flag based on the Cross and fleur-de-lys.</p>
+
+        <h3>Coat of Arms and Motto</h3>
+        <p>Adopted after WWI. National motto: <strong><em>A mari usque ad mare</em></strong> (Latin: "from sea to sea") — inspired by Psalm 72. The arms contain symbols of England, France, Scotland, Ireland, and red maple leaves. Visible on dollar bills, government documents, and public buildings.</p>
+
+        <h3>The Beaver</h3>
+        <p>Adopted as a symbol by the Hudson's Bay Company. Became an emblem of the St. Jean Baptiste Society (1834). Visible on the five-cent coin and the coats of arms of Saskatchewan, Alberta, Montreal, and Toronto.</p>
+
+        <h3>Popular Sports</h3>
+        <ul>
+          <li><strong>Ice Hockey</strong> — National winter sport; developed in Canada in the 1800s; Stanley Cup donated by Lord Stanley (Governor General) in 1892</li>
+          <li><strong>Lacrosse</strong> — Official summer sport; first played by Aboriginal peoples</li>
+          <li><strong>Canadian Football</strong> — Second most popular; Grey Cup since 1909</li>
+          <li><strong>Basketball</strong> — Invented by Canadian James Naismith in 1891</li>
+        </ul>
+
+        <h3>Official Languages</h3>
+        <p>English and French — two official languages. English speakers (Anglophones) and French speakers (Francophones) have lived together for 300+ years. The Official Languages Act was passed in 1969. You must have adequate knowledge of English OR French to become a Canadian citizen (adults 55+ are exempt).</p>
+
+        <h3>National Anthem</h3>
+        <p><em>O Canada</em> was proclaimed as the national anthem in <strong>1980</strong>. It was first sung in Québec City in 1880. The Royal Anthem is <em>God Save the King (or Queen)</em>.</p>
+
+        <h3>The Victoria Cross</h3>
+        <p>Highest honour available to Canadians. Awarded for the most conspicuous bravery or extreme devotion to duty in the presence of the enemy. Has been awarded to 96 Canadians since 1854.</p>
+
+        <h3>Order of Canada</h3>
+        <p>Canada started its own honours system with the <strong>Order of Canada in 1967</strong> (centennial of Confederation).</p>
+
+        <h3>National Public Holidays</h3>
+        <div class="table-wrap"><table>
+          <tr><th>Holiday</th><th>Date</th></tr>
+          <tr><td>New Year's Day</td><td>January 1</td></tr>
+          <tr><td>Sir John A. Macdonald Day</td><td>January 11</td></tr>
+          <tr><td>Good Friday</td><td>Friday before Easter Sunday</td></tr>
+          <tr><td>Victoria Day</td><td>Monday before May 25</td></tr>
+          <tr><td>Fête nationale (Quebec)</td><td>June 24</td></tr>
+          <tr><td>Canada Day</td><td>July 1</td></tr>
+          <tr><td>Labour Day</td><td>First Monday in September</td></tr>
+          <tr><td>Thanksgiving Day</td><td>Second Monday in October</td></tr>
+          <tr><td>Remembrance Day</td><td>November 11</td></tr>
+          <tr><td>Sir Wilfrid Laurier Day</td><td>November 20</td></tr>
+          <tr><td>Christmas Day</td><td>December 25</td></tr>
+          <tr><td>Boxing Day</td><td>December 26</td></tr>
+        </table></div>
+
+        <h3>Famous Canadians & Inventions</h3>
+        <ul>
+          <li>Alexander Graham Bell — concept of telephone</li>
+          <li>Sir Frederick Banting & Charles Best — discovered insulin (saved 16 million lives)</li>
+          <li>Sir Sandford Fleming — invented worldwide standard time zones</li>
+          <li>Dr. John A. Hopps — first cardiac pacemaker</li>
+          <li>Wayne Gretzky — greatest hockey player (Edmonton Oilers 1979–1988)</li>
+          <li>Terry Fox — "Marathon of Hope" across Canada (1980) to raise cancer research funds</li>
+        </ul>
+      </div>
+    `
+  },
+  {
+    title: "Canada's Economy",
+    content: `
+      <div class="lesson-eyebrow">Lesson 08</div>
+      <h2>Canada's Economy</h2>
+      <div class="lesson-body">
+        <p>Canada has always been a trading nation. Commerce remains the engine of economic growth.</p>
+
+        <h3>Three Main Industry Types</h3>
+        <ul>
+          <li><strong>Service industries</strong> — Transportation, education, health care, construction, banking, communications, retail, tourism, government. More than <strong>75% of working Canadians</strong> have jobs in service industries.</li>
+          <li><strong>Manufacturing industries</strong> — Paper, high-tech equipment, aerospace, automobiles, machinery, food, clothing. Largest trading partner: USA.</li>
+          <li><strong>Natural resources industries</strong> — Forestry, fishing, agriculture, mining, energy. A large percentage of Canada's exports are natural resource commodities.</li>
+        </ul>
+
+        <h3>Trade</h3>
+        <p><strong>1988</strong> — Free trade enacted with the United States.</p>
+        <p><strong>1994</strong> — North American Free Trade Agreement (NAFTA) with USA and Mexico.</p>
+        <p>Canada and the USA are each other's largest trading partner. Over three-quarters of Canadian exports go to the USA. The Canada-USA border is the world's largest bilateral trading relationship.</p>
+
+        <h3>Key Economic Facts</h3>
+        <ul>
+          <li>Canada has one of the ten largest economies in the world</li>
+          <li>Member of the G8 (with USA, Germany, UK, Italy, France, Japan, Russia)</li>
+          <li>Oil discovered in Alberta in 1947 — started Canada's modern energy industry</li>
+          <li>By 1951, for the first time, most Canadians could afford adequate food, shelter, and clothing</li>
+        </ul>
+
+        <h3>Social Programs</h3>
+        <ul>
+          <li>Unemployment insurance (now employment insurance) — introduced 1940</li>
+          <li>Old Age Security — devised as early as 1927</li>
+          <li>Canada and Quebec Pension Plans — 1965</li>
+          <li>The Canada Health Act ensures a basic standard of health coverage</li>
+          <li>Publicly funded education — provided by provinces and territories</li>
+        </ul>
+
+        <div class="tip-box"><strong>Exam Tip</strong>The Peace Arch at Blaine, Washington symbolizes the close ties between Canada and the USA, bearing the words "children of a common mother" and "brethren dwelling together in unity."</div>
+      </div>
+    `
+  },
+  {
+    title: "Canada's Regions",
+    content: `
+      <div class="lesson-eyebrow">Lesson 09</div>
+      <h2>Canada's Regions</h2>
+      <div class="lesson-body">
+        <p>Canada is the second largest country on earth — <strong>10 million square kilometres</strong>. Three oceans: Pacific (west), Atlantic (east), Arctic (north). Canada has <strong>10 provinces</strong> and <strong>3 territories</strong>. Population: ~34 million. Capital: <strong>Ottawa</strong> (chosen in 1857 by Queen Victoria).</p>
+
+        <div class="table-wrap"><table>
+          <tr><th>Region</th><th>Province/Territory</th><th>Capital</th></tr>
+          <tr><td rowspan="4">Atlantic</td><td>Newfoundland and Labrador</td><td>St. John's</td></tr>
+          <tr><td>Prince Edward Island</td><td>Charlottetown</td></tr>
+          <tr><td>Nova Scotia</td><td>Halifax</td></tr>
+          <tr><td>New Brunswick</td><td>Fredericton</td></tr>
+          <tr><td rowspan="2">Central Canada</td><td>Quebec</td><td>Québec City</td></tr>
+          <tr><td>Ontario</td><td>Toronto</td></tr>
+          <tr><td rowspan="3">Prairie Provinces</td><td>Manitoba</td><td>Winnipeg</td></tr>
+          <tr><td>Saskatchewan</td><td>Regina</td></tr>
+          <tr><td>Alberta</td><td>Edmonton</td></tr>
+          <tr><td>West Coast</td><td>British Columbia</td><td>Victoria</td></tr>
+          <tr><td rowspan="3">Northern Territories</td><td>Nunavut</td><td>Iqaluit</td></tr>
+          <tr><td>Northwest Territories</td><td>Yellowknife</td></tr>
+          <tr><td>Yukon Territory</td><td>Whitehorse</td></tr>
+        </table></div>
+
+        <h3>The Atlantic Provinces</h3>
+        <ul>
+          <li><strong>Newfoundland and Labrador</strong> — Most easterly point in North America; its own time zone; linked to sea heritage; offshore oil and gas; Labrador has immense hydro-electric resources. Joined Canada in <strong>1949</strong>.</li>
+          <li><strong>Prince Edward Island</strong> — Smallest province; famous for beaches, red soil, potatoes; birthplace of Confederation; connected by Confederation Bridge (longest in world over water that freezes in winter); home of Anne of Green Gables.</li>
+          <li><strong>Nova Scotia</strong> — Most populous Atlantic province; world's highest tides in Bay of Fundy; Halifax is largest east coast port; home to Canada's largest naval base; Celtic and Gaelic traditions; 700+ annual festivals.</li>
+          <li><strong>New Brunswick</strong> — Founded by United Empire Loyalists; second largest river system in North America (St. John River); only officially bilingual province; about 1/3 live in French.</li>
+        </ul>
+
+        <h3>Central Canada</h3>
+        <p>More than half of Canadians live in southern Quebec and Ontario. Ontario and Quebec together produce more than three-quarters of all Canadian manufactured goods.</p>
+        <ul>
+          <li><strong>Quebec</strong> — Nearly 8 million people; majority French-speaking; Canada's main producer of pulp and paper; largest hydro-electricity producer; Montreal is Canada's second largest city.</li>
+          <li><strong>Ontario</strong> — 12+ million people (over 1/3 of Canadians); Toronto is Canada's largest city and financial centre; five Great Lakes (Ontario, Erie, Huron, Michigan in USA, Superior — largest freshwater lake in world).</li>
+        </ul>
+
+        <h3>Prairie Provinces</h3>
+        <ul>
+          <li><strong>Manitoba</strong> — Agriculture, mining, hydro power; Winnipeg's famous intersection is Portage and Main; largest Aboriginal population of any province (15%+).</li>
+          <li><strong>Saskatchewan</strong> — "Breadbasket of the world"; 40% of Canada's arable land; largest producer of grains and oilseeds; richest deposits of uranium and potash; Regina is home to RCMP training academy.</li>
+          <li><strong>Alberta</strong> — Most populous Prairie province; five national parks including Banff; largest producer of oil and gas; oil sands in the north; world-famous cattle ranches.</li>
+        </ul>
+
+        <h3>West Coast — British Columbia</h3>
+        <p>Canada's Pacific gateway. Port of Vancouver is Canada's largest and busiest. About half of all goods produced in BC are forestry products. Also known for mining, fishing, Okanagan wines. Capital Victoria is headquarters of the navy's Pacific fleet. Warm airstreams give BC coast a temperate climate.</p>
+
+        <h3>Northern Territories</h3>
+        <p>Northwest Territories, Nunavut, and Yukon together contain <strong>one-third of Canada's land mass</strong> but only about 100,000 people. Called the "Land of the Midnight Sun" (daylight up to 24 hours in summer). Permanent permafrost tundra.</p>
+        <ul>
+          <li><strong>Yukon</strong> — Gold Rush of the 1890s; coldest temperature ever recorded in Canada (-63°C); Mount Logan (highest mountain in Canada).</li>
+          <li><strong>Northwest Territories</strong> — Yellowknife, the "diamond capital of North America"; more than half the population is Aboriginal; Mackenzie River (second-longest in North America).</li>
+          <li><strong>Nunavut</strong> — Means "our land" in Inuktitut; established in 1999; 85% Inuit; Inuktitut is an official language.</li>
+        </ul>
+
+        <div class="tip-box"><strong>Exam Tip</strong>Know ALL 10 provinces and 3 territories with their capitals. The National Capital is Ottawa (Ontario), chosen by Queen Victoria in 1857.</div>
+      </div>
+    `
+  }
+];
+
+let currentLesson = null;
+let lessonsDone = new Set(JSON.parse(localStorage.getItem('lessonsDone') || '[]'));
+
+function buildLessonMenu() {
+  const menu = document.getElementById('lesson-menu');
+  const mobileNav = document.getElementById('mobile-lesson-nav');
+  menu.innerHTML = '';
+  mobileNav.innerHTML = '';
+  lessons.forEach((l, i) => {
+    const done = lessonsDone.has(i);
+    const li = document.createElement('div');
+    li.className = `lesson-item${currentLesson === i ? ' active' : ''}${done ? ' done' : ''}`;
+    li.onclick = () => setLesson(i);
+    li.innerHTML = `<div class="check">${done ? '✓' : ''}</div><span>${l.title}</span>`;
+    menu.appendChild(li);
+
+    const mb = document.createElement('button');
+    mb.className = `mobile-lesson-btn${currentLesson === i ? ' active' : ''}`;
+    mb.textContent = i + 1 + '. ' + l.title.split(' ').slice(0,2).join(' ');
+    mb.onclick = () => setLesson(i);
+    mobileNav.appendChild(mb);
+  });
+}
+
+function setLesson(i) {
+  currentLesson = i;
+  const content = document.getElementById('lesson-content');
+  content.innerHTML = lessons[i].content + `
+    <div class="lesson-nav">
+      ${i > 0 ? `<button class="btn btn-outline" onclick="setLesson(${i-1})">← Previous</button>` : ''}
+      <button class="btn btn-primary" onclick="markLessonDone(${i})">${lessonsDone.has(i) ? '✓ Completed' : 'Mark Complete'}</button>
+      ${i < lessons.length-1 ? `<button class="btn btn-outline" onclick="setLesson(${i+1})">Next →</button>` : ''}
+    </div>`;
+  content.scrollTop = 0;
+  buildLessonMenu();
+}
+
+function markLessonDone(i) {
+  lessonsDone.add(i);
+  localStorage.setItem('lessonsDone', JSON.stringify([...lessonsDone]));
+  setLesson(i);
+}
+
+// ═══════════════════════════════════════
+// FLASHCARDS
+// ═══════════════════════════════════════
+const allCards = [
+  // HISTORY
+  { q: "What year was the Dominion of Canada officially born?", a: "July 1, 1867 — celebrated as Canada Day.", cat: "history" },
+  { q: "Who was Canada's first Prime Minister?", a: "Sir John Alexander Macdonald. His portrait is on the $10 bill. January 11 is Sir John A. Macdonald Day.", cat: "history" },
+  { q: "What was the Battle of Vimy Ridge, and why is it significant?", a: "The Canadian Corps captured Vimy Ridge on April 9, 1917 — the first major British victory of WWI. April 9 is celebrated as Vimy Day.", cat: "history" },
+  { q: "When did Canada become a self-governing Dominion, and what act made it official?", a: "The British North America Act (1867). July 1, 1867 was Dominion Day until 1982, now Canada Day.", cat: "history" },
+  { q: "What was the Constitutional Act of 1791?", a: "It divided Province of Quebec into Upper Canada (Ontario, Protestant/English) and Lower Canada (Quebec, Catholic/French) and granted elected legislative assemblies.", cat: "history" },
+  { q: "What was the War of 1812?", a: "The USA invaded Canada in 1812. Canadian volunteers, First Nations (led by Chief Tecumseh), and British soldiers repelled them. It ensured Canada remained independent of the USA.", cat: "history" },
+  { q: "What happened on D-Day, June 6, 1944?", a: "15,000 Canadian troops stormed Juno Beach as part of the Allied invasion of Normandy. Approximately 1 in 10 Allied soldiers was Canadian.", cat: "history" },
+  { q: "What was the first representative assembly in British North America, and when was it elected?", a: "Halifax, Nova Scotia in 1758.", cat: "history" },
+  { q: "What was the Quiet Revolution?", a: "An era of rapid change in Quebec in the 1960s. Many Quebecers sought to separate from Canada. Led to the Official Languages Act (1969).", cat: "history" },
+  { q: "When was the Canadian Pacific Railway completed, and why was it significant?", a: "November 7, 1885 — Donald Smith drove the last spike. It connected Canada from sea to sea and was built partly by Chinese labour (who later faced the discriminatory Head Tax).", cat: "history" },
+  { q: "What is the Underground Railroad?", a: "A Christian anti-slavery network that helped thousands of escaped slaves from the USA travel north to freedom in Canada.", cat: "history" },
+  { q: "Who was Laura Secord?", a: "A pioneer wife and mother who made a dangerous 30-km journey to warn Lieutenant FitzGibbon of a planned American attack in the War of 1812, contributing to victory at Beaver Dams.", cat: "history" },
+  { q: "When were Aboriginal peoples in Canada granted the right to vote?", a: "1960. Japanese Canadians gained the right in 1948. Women gained federal voting rights in stages: 1917–1918.", cat: "history" },
+  { q: "When and where was the first European settlement north of Florida?", a: "1604 — by Pierre de Monts and Samuel de Champlain, first on St. Croix Island, then at Port-Royal in Acadia (Nova Scotia).", cat: "history" },
+  { q: "What is the meaning of 'Dominion of Canada'?", a: "Suggested by Sir Leonard Tilley in 1864, inspired by Psalm 72: 'dominion from sea to sea.' Reflects the vision of a powerful, united country spanning a continent.", cat: "history" },
+
+  // GOVERNMENT
+  { q: "What are the three key characteristics of Canada's system of government?", a: "1. Federal state  2. Parliamentary democracy  3. Constitutional monarchy", cat: "government" },
+  { q: "What are the three parts of Canada's Parliament?", a: "1. The Sovereign (King or Queen)  2. The Senate  3. The House of Commons", cat: "government" },
+  { q: "What is the role of the Governor General?", a: "The Governor General represents the Sovereign in Canada. Appointed by the Sovereign on the Prime Minister's advice, usually for 5 years. Grants Royal Assent to bills, calls elections, and opens Parliament.", cat: "government" },
+  { q: "How does a bill become a law in Canada?", a: "Must pass both the House of Commons AND the Senate through 7 steps (First Reading → Royal Assent), then receive Royal Assent from the Governor General.", cat: "government" },
+  { q: "What is the difference between the Head of State and Head of Government?", a: "Head of State = The Sovereign (represented by the Governor General). Head of Government = The Prime Minister, who actually directs governing.", cat: "government" },
+  { q: "What is 'responsible government'?", a: "A system where the government must have the confidence (support) of the majority of elected representatives. If defeated on a confidence vote, the government must resign.", cat: "government" },
+  { q: "What does the federal government control vs. provincial?", a: "Federal: defence, foreign policy, criminal law, citizenship, currency. Provincial: education, health, natural resources, civil rights, highways. Shared: agriculture, immigration.", cat: "government" },
+  { q: "What is a majority vs. minority government?", a: "Majority: governing party holds 50%+ of seats in the House of Commons. Minority: party holds less than 50% — must seek support from other parties to govern.", cat: "government" },
+  { q: "Who are Senators, and how are they chosen?", a: "Senators are appointed by the Governor General on the advice of the Prime Minister. They serve until age 75.", cat: "government" },
+  { q: "What is the Official Opposition?", a: "The opposition party with the most seats in the House of Commons. Also called 'Her/His Majesty's Loyal Opposition.' Their role is to peacefully oppose or improve government proposals.", cat: "government" },
+  { q: "What is the role of the Supreme Court of Canada?", a: "Canada's highest court. Nine judges appointed by the Governor General. It is the final court of appeal for all Canadian law.", cat: "government" },
+  { q: "What does the RCMP stand for, and what is their role?", a: "Royal Canadian Mounted Police (the Mounties). National police force that enforces federal law throughout Canada and serves as provincial police everywhere except Ontario and Quebec.", cat: "government" },
+  { q: "How often are federal elections held?", a: "Every 4 years — on the third Monday in October. But the PM may ask the Governor General to call an earlier election.", cat: "government" },
+  { q: "Who can vote in a Canadian federal election?", a: "Canadian citizens who are 18+ years old on voting day and are on the voters' list.", cat: "government" },
+
+  // SYMBOLS & FACTS
+  { q: "What is Canada's national motto, and what does it mean?", a: "A mari usque ad mare — Latin for 'from sea to sea.' From Psalm 72. Adopted after WWI.", cat: "symbols" },
+  { q: "When was the current Canadian flag first raised?", a: "February 15, 1965. The red-white-red pattern comes from the Royal Military College flag. Red and white have been national colours since 1921.", cat: "symbols" },
+  { q: "What is Canada's national winter sport? Summer sport?", a: "Winter: ice hockey (developed in Canada in the 1800s). Summer: lacrosse (first played by Aboriginal peoples).", cat: "symbols" },
+  { q: "What does the red poppy represent on Remembrance Day?", a: "It honours the sacrifice of Canadians who have served or died in wars. Canadians observe a moment of silence at 11 AM on November 11.", cat: "symbols" },
+  { q: "When was 'O Canada' proclaimed as the national anthem?", a: "1980. It was first sung in Québec City in 1880.", cat: "symbols" },
+  { q: "What is the Order of Canada?", a: "Canada's highest civilian honour, established in 1967 (centennial of Confederation). Recognizes outstanding citizens.", cat: "symbols" },
+  { q: "What is the Victoria Cross?", a: "The highest honour available to Canadians — awarded for conspicuous bravery in the presence of the enemy. Awarded to 96 Canadians since 1854.", cat: "symbols" },
+  { q: "What does the beaver symbolize in Canada?", a: "First adopted by the Hudson's Bay Company, then the St. Jean Baptiste Society (1834). Appears on the 5-cent coin and coats of arms of Alberta, Saskatchewan, Montreal, and Toronto.", cat: "symbols" },
+  { q: "What sport did Canadian James Naismith invent?", a: "Basketball — invented in 1891.", cat: "symbols" },
+  { q: "Who discovered insulin and when?", a: "Sir Frederick Banting and Charles Best. Has saved 16 million lives worldwide.", cat: "symbols" },
+  { q: "What is Canada Day and when is it?", a: "July 1 — celebrates the birth of the Dominion of Canada on July 1, 1867. Was called 'Dominion Day' until 1982.", cat: "symbols" },
+  { q: "What is Victoria Day?", a: "A national holiday on the Monday preceding May 25 — celebrating the Sovereign's birthday.", cat: "symbols" },
+
+  // GEOGRAPHY
+  { q: "What is the capital of Canada, and who chose it?", a: "Ottawa (Ontario). Chosen in 1857 by Queen Victoria.", cat: "geography" },
+  { q: "Name all 10 Canadian provinces and their capitals.", a: "NL→St. John's, PEI→Charlottetown, NS→Halifax, NB→Fredericton, QC→Québec City, ON→Toronto, MB→Winnipeg, SK→Regina, AB→Edmonton, BC→Victoria.", cat: "geography" },
+  { q: "Name Canada's 3 territories and their capitals.", a: "Nunavut→Iqaluit, Northwest Territories→Yellowknife, Yukon→Whitehorse.", cat: "geography" },
+  { q: "What is Canada's largest city?", a: "Toronto, Ontario — also Canada's main financial centre.", cat: "geography" },
+  { q: "What is Canada's second largest city?", a: "Montreal, Quebec — also the second largest mainly French-speaking city in the world after Paris.", cat: "geography" },
+  { q: "What are the five Great Lakes?", a: "Lake Ontario, Lake Erie, Lake Huron, Lake Michigan (USA), and Lake Superior — the largest freshwater lake in the world. Located between Ontario and the United States.", cat: "geography" },
+  { q: "What is Nunavut and when was it established?", a: "Canada's newest territory, established in 1999. Means 'our land' in Inuktitut. 85% Inuit population. Capital: Iqaluit.", cat: "geography" },
+  { q: "Which province is the only officially bilingual province?", a: "New Brunswick — about one-third of its population lives and works in French.", cat: "geography" },
+  { q: "What is the birthplace of Confederation?", a: "Prince Edward Island (PEI) — the smallest province, connected to mainland Canada by the Confederation Bridge.", cat: "geography" },
+  { q: "How large is Canada and what is its rank among world nations?", a: "10 million square kilometres — the second largest country on earth.", cat: "geography" },
+  { q: "What is the 'Land of the Midnight Sun'?", a: "The Northern Territories (Nunavut, Northwest Territories, Yukon) — at the height of summer, daylight can last up to 24 hours.", cat: "geography" },
+  { q: "What is Mount Logan?", a: "The highest mountain in Canada, located in the Yukon. Named after Sir William Logan (geologist, founded Geological Survey of Canada).", cat: "geography" },
+
+  // RIGHTS
+  { q: "What is the Canadian Charter of Rights and Freedoms?", a: "Entrenched in the Constitution in 1982. Protects fundamental freedoms, mobility rights, Aboriginal rights, official language rights, and multiculturalism.", cat: "rights" },
+  { q: "What are the four fundamental freedoms in the Charter?", a: "1. Conscience and religion  2. Thought, belief, opinion, and expression (including speech and press)  3. Peaceful assembly  4. Association", cat: "rights" },
+  { q: "What is habeas corpus?", a: "The right to challenge unlawful detention by the state — comes from English common law.", cat: "rights" },
+  { q: "What is the presumption of innocence?", a: "A cornerstone of the Canadian justice system: everyone is innocent until proven guilty in a court of law.", cat: "rights" },
+  { q: "What does the Oath of Citizenship pledge?", a: "Allegiance to the Sovereign (King/Queen of Canada), to faithfully observe Canada's laws (including the Constitution which recognizes Aboriginal and treaty rights), and to fulfil duties as a Canadian citizen.", cat: "rights" },
+  { q: "What are Mobility Rights under the Charter?", a: "Canadians can live and work anywhere in Canada, enter and leave the country freely, and apply for a passport.", cat: "rights" },
+  { q: "What does the Official Languages Act (1969) do?", a: "Guarantees French and English services in the federal government across Canada. Establishes equality of French and English in Parliament.", cat: "rights" },
+  { q: "What is the Magna Carta and why does it matter for Canada?", a: "Signed in 1215 in England (the Great Charter of Freedoms). Forms the basis of Canada's 800-year-old tradition of ordered liberty.", cat: "rights" },
+  { q: "When did the Constitution of Canada include the Charter of Rights and Freedoms?", a: "1982 — when the Constitution was amended (patriated). Queen Elizabeth II signed the proclamation in Ottawa.", cat: "rights" },
+  { q: "What is the Royal Proclamation of 1763?", a: "Issued by King George III — first guaranteed Aboriginal territorial rights and established the basis for negotiating treaties with newcomers.", cat: "rights" },
+];
+
+let fcFiltered = [...allCards];
+let fcIndex = 0;
+let fcKnew = new Set();
+let fcReview = new Set();
+let fcFlipped = false;
+
+function initFlashcards() {
+  setFCCategory('all', document.querySelector('.fc-category'));
+}
+
+function setFCCategory(cat, btn) {
+  document.querySelectorAll('.fc-category').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  fcFiltered = cat === 'all' ? [...allCards] : allCards.filter(c => c.cat === cat);
+  fcIndex = 0;
+  fcKnew = new Set();
+  fcReview = new Set();
+  renderCard();
+}
+
+function renderCard() {
+  const card = document.getElementById('fc-card');
+  card.classList.remove('flipped');
+  fcFlipped = false;
+  const c = fcFiltered[fcIndex];
+  document.getElementById('fc-question').textContent = c.q;
+  document.getElementById('fc-answer').textContent = c.a;
+  const catLabels = { history: 'History', government: 'Government', symbols: 'Symbols & Facts', geography: 'Geography', rights: 'Rights' };
+  document.getElementById('fc-cat-tag').textContent = catLabels[c.cat] || c.cat;
+  document.getElementById('fc-counter').textContent = `${fcIndex + 1} / ${fcFiltered.length}`;
+  const total = fcFiltered.length;
+  const kn = fcKnew.size;
+  document.getElementById('fc-score-display').textContent = total > 0
+    ? `✓ Knew: ${kn}  ↩ Review: ${fcReview.size}  Remaining: ${total - kn - fcReview.size}`
+    : '';
+}
+
+function flipCard() {
+  const card = document.getElementById('fc-card');
+  fcFlipped = !fcFlipped;
+  card.classList.toggle('flipped', fcFlipped);
+}
+
+function fcNext() { fcIndex = (fcIndex + 1) % fcFiltered.length; renderCard(); }
+function fcPrev() { fcIndex = (fcIndex - 1 + fcFiltered.length) % fcFiltered.length; renderCard(); }
+function markKnew() { fcKnew.add(fcIndex); fcReview.delete(fcIndex); fcNext(); }
+function markReview() { fcReview.add(fcIndex); fcKnew.delete(fcIndex); fcNext(); }
+
+// ═══════════════════════════════════════
+// QUIZ
+// ═══════════════════════════════════════
+const allQuestions = [
+  { q: "What are three responsibilities of citizenship?", opts: ["Being loyal to Canada, recycling newspapers, serving in the navy", "Obeying the law, taking responsibility for oneself and family, serving on a jury", "Learning both official languages, voting in elections, belonging to a union", "Buying Canadian products, owning your own business, using less water"], ans: 1, exp: "Citizenship responsibilities include obeying the law (rule of law), taking responsibility for yourself and family, serving on a jury when called, voting in elections, helping others in the community, and protecting the environment." },
+  { q: "What is the meaning of the Remembrance Day poppy?", opts: ["To remember Queen Elizabeth II", "To celebrate Confederation", "To honour prime ministers who have died", "To remember the sacrifice of Canadians who have served or died in wars"], ans: 3, exp: "Canadians wear the red poppy and observe a moment of silence at 11 AM on November 11 to honour the sacrifices of over a million brave men and women who have served, and the 110,000 who have given their lives." },
+  { q: "How are members of Parliament chosen?", opts: ["Appointed by the United Nations", "Chosen by provincial premiers", "Elected by voters in their local constituency (riding)", "Elected by landowners and police chiefs"], ans: 2, exp: "Members of Parliament (MPs) are elected by voters in their local constituency — each of Canada's 338 electoral districts elects one MP." },
+  { q: "Which of the following is NOT a fundamental freedom under the Canadian Charter of Rights and Freedoms?", opts: ["Freedom of conscience and religion", "Freedom of peaceful assembly", "Freedom to earn a minimum wage", "Freedom of thought, belief, opinion and expression"], ans: 2, exp: "The four fundamental freedoms are: conscience/religion, thought/belief/opinion/expression, peaceful assembly, and association. A minimum wage is a labour standard, not a Charter freedom." },
+  { q: "When was the Canadian Charter of Rights and Freedoms entrenched in the Constitution?", opts: ["1867", "1931", "1982", "1999"], ans: 2, exp: "The Canadian Charter of Rights and Freedoms was entrenched in the Constitution in 1982 when Prime Minister Pierre Trudeau patriated the Constitution. Queen Elizabeth II signed the proclamation in Ottawa." },
+  { q: "What are Canada's three founding peoples?", opts: ["British, French, and American", "Aboriginal, French, and British", "Inuit, Métis, and French", "English, Scottish, and Irish"], ans: 1, exp: "The three founding peoples of Canada are Aboriginal, French, and British. Understanding these groups is key to understanding what it means to be Canadian." },
+  { q: "What is Canada's national motto?", opts: ["Peace, Order and Good Government", "True North Strong and Free", "A mari usque ad mare", "From Sea to Sea"], ans: 2, exp: "Canada's national motto is A mari usque ad mare — Latin for 'from sea to sea.' It was inspired by Psalm 72 and appears on the coat of arms." },
+  { q: "When was the Dominion of Canada officially born?", opts: ["July 1, 1867", "November 7, 1885", "April 9, 1917", "February 15, 1965"], ans: 0, exp: "The Dominion of Canada was officially born on July 1, 1867, when the British Parliament passed the British North America Act. This date is now celebrated as Canada Day." },
+  { q: "Which ocean lies to the NORTH of Canada?", opts: ["Atlantic Ocean", "Pacific Ocean", "Arctic Ocean", "Indian Ocean"], ans: 2, exp: "Three oceans line Canada's frontiers: the Pacific Ocean in the west, the Atlantic Ocean in the east, and the Arctic Ocean to the north." },
+  { q: "How many provinces and territories does Canada have?", opts: ["9 provinces and 2 territories", "10 provinces and 3 territories", "12 provinces and 1 territory", "10 provinces and 2 territories"], ans: 1, exp: "Canada has 10 provinces and 3 territories. The most recent addition was Nunavut in 1999." },
+  { q: "What is the capital of Canada?", opts: ["Toronto", "Montreal", "Ottawa", "Vancouver"], ans: 2, exp: "Ottawa, located on the Ottawa River in Ontario, is the capital of Canada. It was chosen in 1857 by Queen Victoria." },
+  { q: "Who is Canada's Head of State?", opts: ["The Prime Minister", "The Governor General", "The Sovereign (King or Queen)", "The Chief Justice of the Supreme Court"], ans: 2, exp: "Canada's Head of State is the Sovereign (currently King Charles III). The Governor General represents the Sovereign in Canada. The Prime Minister is the Head of Government." },
+  { q: "Which battle is considered a defining moment in Canadian national identity during WWI?", opts: ["Battle of the Atlantic", "Battle of Vimy Ridge", "Battle of Queenston Heights", "Battle of Juno Beach"], ans: 1, exp: "The Canadian Corps captured Vimy Ridge on April 9, 1917 — the first major British victory of WWI. April 9 is celebrated as Vimy Day. One Canadian officer said it was 'Canada from the Atlantic to the Pacific on parade... the birth of a nation.'" },
+  { q: "What did the Quebec Act of 1774 do?", opts: ["Made Quebec a separate country", "Allowed religious freedom for Catholics and restored French civil law", "Joined Quebec to Upper Canada", "Gave the vote to Québecois"], ans: 1, exp: "The Quebec Act of 1774 allowed religious freedom for Catholics, permitted them to hold public office (not allowed in Britain at the time), and restored French civil law while maintaining British criminal law." },
+  { q: "What is the 'presumption of innocence'?", opts: ["Citizens are assumed to follow the law", "Everyone is innocent until proven guilty", "Police are presumed to act correctly", "Judges are immune from prosecution"], ans: 1, exp: "The presumption of innocence is a cornerstone of the Canadian justice system: everyone is innocent until proven guilty in a court of law." },
+  { q: "Which province is the ONLY officially bilingual province in Canada?", opts: ["Quebec", "Ontario", "New Brunswick", "Manitoba"], ans: 2, exp: "New Brunswick is the only officially bilingual province — about one-third of its population lives and works in French." },
+  { q: "When did the current Canadian flag first fly?", opts: ["July 1, 1867", "November 11, 1945", "February 15, 1965", "April 17, 1982"], ans: 2, exp: "The current Canadian flag (the Maple Leaf) was raised for the first time on February 15, 1965. The red-white-red pattern comes from the Royal Military College flag." },
+  { q: "What is 'habeas corpus'?", opts: ["The right to a fair trial", "The right to challenge unlawful detention by the state", "The right to vote", "The right to legal counsel"], ans: 1, exp: "Habeas corpus — the right to challenge unlawful detention by the state — comes from English common law and is a key part of Canada's legal heritage." },
+  { q: "Which is the largest city in Canada?", opts: ["Montreal", "Vancouver", "Ottawa", "Toronto"], ans: 3, exp: "Toronto, Ontario is the largest city in Canada and the country's main financial centre. It is also home to more than 12 million people in the greater area — over one-third of all Canadians." },
+  { q: "What does the Oath of Citizenship require new citizens to pledge?", opts: ["Allegiance to Canada and the Canadian flag", "Allegiance to the Sovereign, observance of Canadian laws, and fulfilment of citizen duties", "Allegiance to the Prime Minister and the Constitution", "Allegiance to Canadian democracy and the Bill of Rights"], ans: 1, exp: "The Oath pledges allegiance to the Sovereign (King/Queen of Canada), faithfully observing the laws of Canada including the Constitution (which recognizes Aboriginal treaty rights), and fulfilling duties as a Canadian citizen." },
+  { q: "What are Canada's two official languages?", opts: ["English and Inuktitut", "English and Michif", "French and English", "English and Aboriginal languages"], ans: 2, exp: "English and French are Canada's two official languages. The Official Languages Act (1969) guarantees French and English services in the federal government across Canada." },
+  { q: "What sport was invented by Canadian James Naismith?", opts: ["Ice Hockey", "Lacrosse", "Basketball", "Canadian Football"], ans: 2, exp: "Basketball was invented by Canadian James Naismith in 1891." },
+  { q: "Who were the Fathers of Confederation?", opts: ["The first settlers of New France", "Representatives who established the Dominion of Canada in 1867", "The first members of the Senate", "The authors of the Constitution Act, 1982"], ans: 1, exp: "The Fathers of Confederation were representatives of Nova Scotia, New Brunswick, and the Province of Canada who worked together from 1864 to 1867 to establish the Dominion of Canada." },
+  { q: "What is the role of the RCMP?", opts: ["They only police national parks", "They enforce federal law throughout Canada and serve as provincial police in most provinces", "They serve only as ceremonial police", "They police only Ontario and Quebec"], ans: 1, exp: "The Royal Canadian Mounted Police (RCMP) enforce federal laws throughout Canada and serve as the provincial police in all provinces and territories except Ontario and Quebec, which have their own provincial forces." },
+  { q: "What is a 'secret ballot' in a Canadian election?", opts: ["Votes are submitted by mail only", "No one can watch how you vote, and you are never required to tell anyone", "Ballots are destroyed after counting", "Votes are counted in secret by government officials only"], ans: 1, exp: "Canadian law secures the right to a secret ballot. No one — including family, your employer, or union representatives — has the right to insist you tell them how you voted." },
+  { q: "What did the War of 1812 ensure for Canada?", opts: ["Canada gained independence from Britain", "Canada remained independent from the United States", "Canada gained the provinces of New Brunswick and Nova Scotia", "Canada established its own constitution"], ans: 1, exp: "The present-day Canada-USA border is partly an outcome of the War of 1812. By 1814, the American attempt to conquer Canada had failed, ensuring Canada remained independent of the United States." },
+  { q: "What is a 'majority government'?", opts: ["The governing party won the popular vote", "The governing party holds at least half of the seats in the House of Commons", "The governing party won more than two-thirds of ridings", "The governing party won seats in all 10 provinces"], ans: 1, exp: "A majority government means the party in power holds at least half (50%+) of the seats in the House of Commons. A minority government holds less than half." },
+  { q: "When was Nunavut established?", opts: ["1867", "1949", "1999", "2000"], ans: 2, exp: "Nunavut was established on April 1, 1999, from the eastern part of the Northwest Territories. It is Canada's newest territory. Its name means 'our land' in Inuktitut." },
+  { q: "What is the significance of D-Day (June 6, 1944) for Canada?", opts: ["Canada declared war on Japan", "15,000 Canadian troops stormed Juno Beach in the Allied invasion of Normandy", "Canada liberated the Netherlands", "The Canadian navy defeated Germany in the Atlantic"], ans: 1, exp: "On D-Day, June 6, 1944, 15,000 Canadian troops stormed and captured Juno Beach from the German Army. Approximately one in ten Allied soldiers on D-Day was Canadian." },
+  { q: "What is the largest freshwater lake in the world, located partly between Canada and the USA?", opts: ["Lake Ontario", "Lake Huron", "Lake Superior", "Lake Erie"], ans: 2, exp: "Lake Superior is the largest freshwater lake in the world. Along with Lake Ontario, Lake Erie, Lake Huron, and Lake Michigan, it is one of the five Great Lakes located between Ontario and the United States." },
+  { q: "What percentage of working Canadians have jobs in service industries?", opts: ["More than 50%", "More than 60%", "More than 75%", "More than 90%"], ans: 2, exp: "More than 75% of working Canadians have jobs in service industries, which include transportation, education, health care, construction, banking, communications, retail, tourism, and government." },
+  { q: "What is the purpose of Elections Canada?", opts: ["To appoint Senators", "To create electoral laws", "To maintain the National Register of Electors and administer federal elections", "To certify election results in the Supreme Court"], ans: 2, exp: "Elections Canada is a neutral agency of Parliament that maintains the National Register of Electors, mails voter information cards, and administers federal elections and referendums." },
+  { q: "When did the first representative assembly meet in Halifax, Nova Scotia?", opts: ["1713", "1758", "1791", "1812"], ans: 1, exp: "The first representative assembly was elected in Halifax, Nova Scotia in 1758. Prince Edward Island followed in 1773, and New Brunswick in 1785." },
+  { q: "Which territory's capital is known as the 'diamond capital of North America'?", opts: ["Yukon (Whitehorse)", "Nunavut (Iqaluit)", "Northwest Territories (Yellowknife)", "British Columbia (Victoria)"], ans: 2, exp: "Yellowknife, the capital of the Northwest Territories (population ~20,000), is known as the 'diamond capital of North America.'" },
+];
+
+let quizState = {
+  mode: 'setup', // setup | active | done
+  questions: [],
+  current: 0,
+  answers: [],
+  selected: null,
+  revealed: false,
+  count: 20,
+  category: 'all'
+};
+
+function initQuiz() {
+  renderQuizSetup();
+}
+
+function renderQuizSetup() {
+  quizState.mode = 'setup';
+  const body = document.getElementById('quiz-body');
+  body.innerHTML = `
+    <div class="quiz-setup">
+      <h3>Configure Your Practice Test</h3>
+      <p style="font-size:0.88rem;color:var(--ink-mid);margin-bottom:1.25rem">The real citizenship test is 20 questions, 30 minutes. You need 15/20 (75%) to pass.</p>
+      <p style="font-weight:600;font-size:0.88rem;margin-bottom:0.75rem">Number of Questions:</p>
+      <div class="quiz-options" id="q-count-opts">
+        <button class="quiz-option-btn selected" onclick="selectQCount(10, this)"><strong>10</strong><br><span style="font-size:0.78rem;color:var(--ink-light)">Quick review</span></button>
+        <button class="quiz-option-btn" onclick="selectQCount(20, this)"><strong>20</strong><br><span style="font-size:0.78rem;color:var(--ink-light)">Full test</span></button>
+        <button class="quiz-option-btn" onclick="selectQCount(35, this)"><strong>All ${allQuestions.length}</strong><br><span style="font-size:0.78rem;color:var(--ink-light)">Deep practice</span></button>
+      </div>
+      <button class="btn btn-primary" onclick="startQuiz()" style="margin-top:0.5rem">Start Quiz →</button>
+    </div>`;
+  quizState.count = 10;
+}
+
+function selectQCount(n, btn) {
+  quizState.count = n;
+  document.querySelectorAll('#q-count-opts .quiz-option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function startQuiz() {
+  const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
+  quizState.questions = shuffled.slice(0, Math.min(quizState.count, allQuestions.length));
+  quizState.current = 0;
+  quizState.answers = new Array(quizState.questions.length).fill(null);
+  quizState.mode = 'active';
+  renderQuizQuestion();
+}
+
+function renderQuizQuestion() {
+  const q = quizState.questions[quizState.current];
+  const ans = quizState.answers[quizState.current];
+  const revealed = ans !== null;
+  const total = quizState.questions.length;
+  const curr = quizState.current;
+  const pct = Math.round((curr / total) * 100);
+
+  const letters = ['A','B','C','D'];
+  const choicesHTML = q.opts.map((opt, i) => {
+    let cls = 'q-choice';
+    if (revealed) {
+      if (i === q.ans) cls += ' correct';
+      else if (i === ans && i !== q.ans) cls += ' wrong';
+    }
+    return `<button class="${cls}" onclick="selectAnswer(${i})" ${revealed ? 'disabled' : ''}>
+      <div class="choice-letter">${letters[i]}</div>
+      ${opt}
+    </button>`;
+  }).join('');
+
+  const expHTML = revealed
+    ? `<div class="q-explanation ${ans !== q.ans ? 'wrong-exp' : ''}">
+        <strong>${ans === q.ans ? '✓ Correct!' : '✗ Incorrect.'}</strong> ${q.exp}
+      </div>` : '';
+
+  const body = document.getElementById('quiz-body');
+  body.innerHTML = `
+    <div class="q-progress">
+      <div class="q-progress-top">
+        <span>Question ${curr + 1} of ${total}</span>
+        <span>${pct}% complete</span>
+      </div>
+      <div class="q-progress-bar"><div class="q-progress-fill" style="width:${pct}%"></div></div>
+    </div>
+    <div class="q-card">
+      <div class="q-num">Question ${curr + 1}</div>
+      <div class="q-question">${q.q}</div>
+      <div class="q-choices">${choicesHTML}</div>
+      ${expHTML}
+      <div class="q-actions">
+        ${revealed ? `<button class="btn btn-primary" onclick="${curr + 1 < total ? 'nextQuestion()' : 'showResults()'}">${curr + 1 < total ? 'Next Question →' : 'See Results →'}</button>` : ''}
+      </div>
+    </div>`;
+}
+
+function selectAnswer(i) {
+  if (quizState.answers[quizState.current] !== null) return;
+  quizState.answers[quizState.current] = i;
+  renderQuizQuestion();
+}
+
+function nextQuestion() {
+  quizState.current++;
+  renderQuizQuestion();
+}
+
+function showResults() {
+  const correct = quizState.answers.filter((a, i) => a === quizState.questions[i].ans).length;
+  const total = quizState.questions.length;
+  const pct = Math.round((correct / total) * 100);
+  let msg = '';
+  if (pct >= 90) msg = '🎉 Outstanding! You\'re ready to ace the real test!';
+  else if (pct >= 75) msg = '✅ Great work! You\'ve reached the passing score. Keep reviewing!';
+  else if (pct >= 60) msg = '📚 Good effort! Study the lessons and try again.';
+  else msg = '💪 Keep studying! Review the lessons and flashcards, then try again.';
+
+  document.getElementById('quiz-body').innerHTML = `
+    <div class="quiz-results">
+      <div class="result-score">${pct}%</div>
+      <div class="result-label">Score (need 75% to pass the real test)</div>
+      <div class="result-msg">${msg}</div>
+      <div class="result-breakdown">
+        <div class="rb-item"><div class="rb-num correct">${correct}</div><div class="rb-label">Correct</div></div>
+        <div class="rb-item"><div class="rb-num wrong">${total - correct}</div><div class="rb-label">Incorrect</div></div>
+        <div class="rb-item"><div class="rb-num" style="color:var(--ink)">${total}</div><div class="rb-label">Total</div></div>
+      </div>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="startQuiz()">Try Again</button>
+        <button class="btn btn-outline" onclick="renderQuizSetup()">New Test Setup</button>
+        <button class="btn btn-outline" onclick="showScreen('lessons')">Review Lessons</button>
+      </div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════
+// CHEAT SHEET
+// ═══════════════════════════════════════
+const cheatData = [
+  { title: "Key Dates", items: [
+    "1215 — Magna Carta signed",
+    "1497 — John Cabot maps East Coast",
+    "1604 — First French settlement",
+    "1608 — Champlain founds Québec City",
+    "1670 — Hudson's Bay Company founded",
+    "1759 — Battle of Plains of Abraham",
+    "1763 — Royal Proclamation (Aboriginal rights)",
+    "1774 — Quebec Act",
+    "1776 — 13 colonies declare independence; Loyalists flee north",
+    "1793 — Upper Canada begins abolition",
+    "1812–1814 — War of 1812",
+    "1867 — Confederation (July 1)",
+    "1885 — CPR last spike (Nov. 7)",
+    "1917 — Vimy Ridge (April 9)",
+    "1918 — Women gain federal vote",
+    "1944 — D-Day Juno Beach (June 6)",
+    "1965 — Current flag raised (Feb. 15)",
+    "1969 — Official Languages Act",
+    "1980 — O Canada becomes national anthem",
+    "1982 — Constitution / Charter of Rights",
+    "1999 — Nunavut established",
+  ]},
+  { title: "Provinces & Capitals", items: [
+    "Newfoundland & Labrador → St. John's",
+    "Prince Edward Island → Charlottetown",
+    "Nova Scotia → Halifax",
+    "New Brunswick → Fredericton",
+    "Quebec → Québec City",
+    "Ontario → Toronto",
+    "Manitoba → Winnipeg",
+    "Saskatchewan → Regina",
+    "Alberta → Edmonton",
+    "British Columbia → Victoria",
+  ]},
+  { title: "Territories & Capitals", items: [
+    "Nunavut → Iqaluit",
+    "Northwest Territories → Yellowknife",
+    "Yukon → Whitehorse",
+    "National Capital → Ottawa (Ontario)",
+  ]},
+  { title: "Key People", items: [
+    "John Cabot — first to map East Coast (1497)",
+    "Jacques Cartier — named Canada (1534–42)",
+    "Samuel de Champlain — founded Québec City",
+    "Laura Secord — War of 1812 heroine",
+    "Sir Isaac Brock — hero of War of 1812",
+    "Sir John A. Macdonald — 1st PM ($10 bill)",
+    "Sir Wilfrid Laurier — 1st French-Canadian PM ($5 bill)",
+    "Sir George-Étienne Cartier — Quebec architect of Confederation",
+    "General Sir Arthur Currie — Canada's greatest soldier (WWI)",
+    "Agnes Macphail — 1st woman MP (1921)",
+    "Terry Fox — Marathon of Hope (1980)",
+    "Wayne Gretzky — greatest hockey player",
+    "James Naismith — invented basketball (1891)",
+    "Banting & Best — discovered insulin",
+    "Alexander Graham Bell — telephone concept",
+  ]},
+  { title: "Government Structure", items: [
+    "Head of State: Sovereign (King Charles III)",
+    "Governor General: Represents Sovereign",
+    "Head of Government: Prime Minister",
+    "Parliament = Sovereign + Senate + House of Commons",
+    "338 electoral ridings / constituencies",
+    "Senators: appointed by GG on PM's advice, serve to age 75",
+    "Federal elections: every 4 years (3rd Monday in October)",
+    "Voting age: 18+  |  Candidates: 18+",
+    "Pass bill: both chambers + Royal Assent",
+    "Supreme Court: 9 judges",
+    "RCMP: national police (not ON, QC)",
+  ]},
+  { title: "Rights & Freedoms", items: [
+    "Charter entrenched: 1982",
+    "Magna Carta: 1215 (800-yr liberty tradition)",
+    "4 freedoms: conscience/religion, expression, assembly, association",
+    "Habeas corpus: challenge unlawful detention",
+    "Mobility rights: live/work anywhere, passport",
+    "Presumption of innocence",
+    "Language: English & French equal in federal govt",
+    "Multiculturalism: fundamental Canadian heritage",
+    "Charter origin: 'supremacy of God and rule of law'",
+    "2008: Ottawa apologized for residential schools",
+    "1763: Royal Proclamation – Aboriginal territorial rights",
+  ]},
+  { title: "Symbols & Culture", items: [
+    "Flag: raised Feb. 15, 1965",
+    "National colours: red & white (since 1921)",
+    "Motto: A mari usque ad mare (sea to sea)",
+    "National anthem: O Canada (1980; first sung 1880)",
+    "Royal anthem: God Save the King",
+    "Beaver: on 5-cent coin",
+    "Official Language Act: 1969",
+    "Order of Canada: 1967",
+    "Victoria Cross: highest honour (96 Canadians)",
+    "National winter sport: ice hockey",
+    "National summer sport: lacrosse",
+    "Basketball invented by James Naismith (Canadian) 1891",
+  ]},
+  { title: "Quick Numbers", items: [
+    "Canada: 2nd largest country (10M km²)",
+    "10 provinces + 3 territories",
+    "Population: ~38 million",
+    "18+ million Anglophones, 7+ million Francophones",
+    "Vimy Ridge: 10,000 Canadian casualties",
+    "WWI total: 600,000+ served, 60,000 killed",
+    "WWII total: 1M+ served, 44,000 killed",
+    "75% working Canadians in service industries",
+    "Citizenship test: 20 questions, 30 min, 75% to pass",
+    "Senators serve until age 75",
+    "338 federal electoral districts",
+    "Supreme Court: 9 judges",
+  ]},
+];
+
+function renderCheatSheet() {
+  const grid = document.getElementById('cheat-grid');
+  grid.innerHTML = cheatData.map(section => `
+    <div class="cheat-card">
+      <h3>${section.title}</h3>
+      <ul class="cheat-list">
+        ${section.items.map(item => {
+          const parts = item.split(' — ');
+          return parts.length > 1
+            ? `<li><span class="cheat-key">${parts[0]}</span><span class="cheat-val"> — ${parts.slice(1).join(' — ')}</span></li>`
+            : `<li>${item}</li>`;
+        }).join('')}
+      </ul>
+    </div>
+  `).join('');
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+buildLessonMenu();
+renderCard(); // pre-load first flashcard
+</script>
+</body>
+</html>
